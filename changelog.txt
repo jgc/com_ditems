@@ -1,0 +1,14 @@
+banner -> ditem
+banners -> ditems
+plus capitalized versions
+
+client -> dname
+clients -> dnames
+plus capitalized versions
+
+Updated sql files to add `version` to first table
+Add sql folder to manifest file
+Update manifest file
+?? what do do about {img="class:banners"} - possibly just delete
+Updated language files (site) - 'Banner' as a comment -> 'Diary Item' rather than 'Ditem'
+

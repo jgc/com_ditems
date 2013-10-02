@@ -52,7 +52,11 @@ class BannersHelper
 			$vName == 'clients'
 		);
 
-		
+		JHtmlSidebar::addEntry(
+			JText::_('COM_BANNERS_SUBMENU_TRACKS'),
+			'index.php?option=com_banners&view=tracks',
+			$vName == 'tracks'
+		);
 	}
 
 	/**
