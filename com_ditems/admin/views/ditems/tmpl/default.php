@@ -109,7 +109,7 @@ $sortFields = $this->getSortFields();
 						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_STICKY', 'a.sticky', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_CLIENT', 'client_name', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_DNAME', 'dname_name', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
 						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_IMPRESSIONS', 'impmade', $listDirn, $listOrder); ?>
@@ -221,7 +221,7 @@ $sortFields = $this->getSortFields();
 						<?php echo JHtml::_('ditem.pinned', $item->sticky, $i, $canChange); ?>
 					</td>
 					<td class="small hidden-phone">
-						<?php echo $item->client_name;?>
+						<?php echo $item->dname_name;?>
 					</td>
 					<td class="small hidden-phone">
 						<?php echo JText::sprintf('COM_DITEMS_IMPRESSIONS', $item->impmade, $item->imptotal ? $item->imptotal : JText::_('COM_DITEMS_UNLIMITED'));?>

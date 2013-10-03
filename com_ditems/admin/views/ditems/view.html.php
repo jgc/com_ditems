@@ -153,9 +153,9 @@ class DitemsViewDitems extends JViewLegacy
 		);
 
 		JHtmlSidebar::addFilter(
-			JText::_('COM_DITEMS_SELECT_CLIENT'),
+			JText::_('COM_DITEMS_SELECT_DNAME'),
 			'filter_dname_id',
-			JHtml::_('select.options', DitemsHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.dname_id'))
+			JHtml::_('select.options', DitemsHelper::getDnameOptions(), 'value', 'text', $this->state->get('filter.dname_id'))
 		);
 
 		JHtmlSidebar::addFilter(
@@ -185,7 +185,7 @@ class DitemsViewDitems extends JViewLegacy
 			'a.state' => JText::_('JSTATUS'),
 			'a.name' => JText::_('COM_DITEMS_HEADING_NAME'),
 			'a.sticky' => JText::_('COM_DITEMS_HEADING_STICKY'),
-			'dname_name' => JText::_('COM_DITEMS_HEADING_CLIENT'),
+			'dname_name' => JText::_('COM_DITEMS_HEADING_DNAME'),
 			'impmade' => JText::_('COM_DITEMS_HEADING_IMPRESSIONS'),
 			'clicks' => JText::_('COM_DITEMS_HEADING_CLICKS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
