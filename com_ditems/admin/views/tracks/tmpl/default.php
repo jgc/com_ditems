@@ -115,7 +115,7 @@ $sortFields = $this->getSortFields();
   					</div>
   				</td>
   				<td>
-  					<?php echo $item->client_name;?>
+  					<?php echo $item->dname_name;?>
   				</td>
   				<td class="small hidden-phone">
   					<?php echo $item->track_type == 1 ? JText::_('COM_DITEMS_IMPRESSION') : JText::_('COM_DITEMS_CLICK');?>

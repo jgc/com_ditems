@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS `#__ditems` (
   `state` tinyint(3) NOT NULL DEFAULT '0',
   `catid` int(10) unsigned NOT NULL DEFAULT '0',
   `description` text NOT NULL,
-  `custombannercode` varchar(2048) NOT NULL,
+  `customditemcode` varchar(2048) NOT NULL,
   `sticky` tinyint(1) unsigned NOT NULL DEFAULT '0',
   `ordering` int(11) NOT NULL DEFAULT '0',
   `metakey` text NOT NULL,
@@ -37,7 +37,7 @@ CREATE TABLE IF NOT EXISTS `#__ditems` (
   KEY `idx_state` (`state`),
   KEY `idx_own_prefix` (`own_prefix`),
   KEY `idx_metakey_prefix` (`metakey_prefix`),
-  KEY `idx_banner_catid` (`catid`),
+  KEY `idx_ditem_catid` (`catid`),
   KEY `idx_language` (`language`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
@@ -64,12 +64,12 @@ CREATE TABLE IF NOT EXISTS `#__ditem_dnames` (
 CREATE TABLE IF NOT EXISTS `#__ditem_dtracks` (
   `track_date` datetime NOT NULL,
   `track_type` int(10) unsigned NOT NULL,
-  `banner_id` int(10) unsigned NOT NULL,
+  `ditem_id` int(10) unsigned NOT NULL,
   `count` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`track_date`,`track_type`,`banner_id`),
+  PRIMARY KEY (`track_date`,`track_type`,`ditem_id`),
   KEY `idx_track_date` (`track_date`),
   KEY `idx_track_type` (`track_type`),
-  KEY `idx_banner_id` (`banner_id`)
+  KEY `idx_ditem_id` (`ditem_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

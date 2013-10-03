@@ -133,7 +133,7 @@ class DitemsTableDitem extends JTable
 			$purchase_type = $this->purchase_type;
 			if ($purchase_type < 0 && $this->cid)
 			{
-				$dname = JTable::getInstance('Client', 'DitemsTable');
+				$dname = JTable::getInstance('Dname', 'DitemsTable');
 				$dname->load($this->cid);
 				$purchase_type = $dname->purchase_type;
 			}
