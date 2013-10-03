@@ -11,6 +11,16 @@
 
 defined('_JEXEC') or die;
 
+require_once JPATH_COMPONENT.'/helpers/route.php';
+
+$user =& JFactory::getUser();
+$userId = $user->get( 'id' );
+
+if (!JFactory::getUser()->authorise('core.manage', 'com_ditems'))
+{
+	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
+}
+
 $controller = JControllerLegacy::getInstance('Ditems');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();
