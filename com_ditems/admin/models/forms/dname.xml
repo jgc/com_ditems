@@ -7,8 +7,6 @@
 			readonly="true" class="readonly"
 			label="JGLOBAL_FIELD_ID_LABEL" description ="JGLOBAL_FIELD_ID_DESC"/>
 
-
-
 		<field name="name" type="text" class="inputbox"
 			size="40" label="COM_DITEMS_FIELD_DNAME_NAME_LABEL"
 			description="COM_DITEMS_FIELD_DNAME_NAME_DESC"
