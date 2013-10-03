@@ -29,6 +29,7 @@
 		<filename>router.php</filename>
 		<folder>helpers</folder>
 		<folder>models</folder>
+		<folder>models</folder>
 	</files>
 	<administration>
 		<menu img="class:banners">com_ditems</menu>
