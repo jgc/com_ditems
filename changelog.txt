@@ -1,3 +1,9 @@
+CONFIGURATION
+1. Must add a category for the add button to appear in the back-end.  Get same behaviour with com_banners. Why???
+
+
+####################################################
+
 Comment out ignore sql in github .gitignore (# sql)
 ===============================================
 banner -> ditem
