@@ -61,7 +61,7 @@ CREATE TABLE IF NOT EXISTS `#__ditem_dnames` (
   KEY `idx_metakey_prefix` (`metakey_prefix`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
-CREATE TABLE IF NOT EXISTS `#__ditem_dtracks` (
+CREATE TABLE IF NOT EXISTS `#__ditem_tracks` (
   `track_date` datetime NOT NULL,
   `track_type` int(10) unsigned NOT NULL,
   `ditem_id` int(10) unsigned NOT NULL,
