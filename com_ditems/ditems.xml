@@ -26,10 +26,12 @@
 		<filename>controller.php</filename>
 		<filename>ditems.php</filename>
 		<filename>index.html</filename>
+		<filename>metadata.xml</filename>
 		<filename>router.php</filename>
+		<folder>controllers</folder>
 		<folder>helpers</folder>
 		<folder>models</folder>
-		<folder>models</folder>
+		<folder>views</folder>
 	</files>
 	<administration>
 		<menu img="class:banners">com_ditems</menu>
