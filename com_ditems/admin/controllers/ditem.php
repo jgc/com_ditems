@@ -1,28 +1,28 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\controllers\ditem.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banner controller class.
+ * Ditem controller class.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersControllerBanner extends JControllerForm
+class DitemsControllerDitem extends JControllerForm
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.
-	 * @since  1.6
 	 */
-	protected $text_prefix = 'COM_BANNERS_BANNER';
+	protected $text_prefix = 'COM_DITEMS_DITEM';
 
 	/**
 	 * Method override to check if you can add a new record.
@@ -30,8 +30,6 @@ class BannersControllerBanner extends JControllerForm
 	 * @param   array  $data  An array of input data.
 	 *
 	 * @return  boolean
-	 *
-	 * @since   1.6
 	 */
 	protected function allowAdd($data = array())
 	{
@@ -104,10 +102,10 @@ class BannersControllerBanner extends JControllerForm
 		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
 		// Set the model
-		$model	= $this->getModel('Banner', '', array());
+		$model	= $this->getModel('Ditem', '', array());
 
 		// Preset the redirect
-		$this->setRedirect(JRoute::_('index.php?option=com_banners&view=banners' . $this->getRedirectToListAppend(), false));
+		$this->setRedirect(JRoute::_('index.php?option=com_ditems&view=ditems' . $this->getRedirectToListAppend(), false));
 
 		return parent::batch($model);
 	}

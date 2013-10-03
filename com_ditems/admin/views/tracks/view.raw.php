@@ -1,9 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_banners
+  * @package     Joomla.Administrator
+ * @subpackage  com_ditems
+ * @file        admin\views\tracks\view.raw.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,10 +15,10 @@ defined('_JEXEC') or die;
  * View class for a list of tracks.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersViewTracks extends JViewLegacy
+class DitemsViewTracks extends JViewLegacy
 {
 	/**
 	 * Display the view

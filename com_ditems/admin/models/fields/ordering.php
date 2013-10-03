@@ -1,19 +1,21 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\ordering.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('JPATH_BASE') or die;
 
 /**
- * Supports an HTML select list of banners
+ * Supports an HTML select list of ditems
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
 class JFormFieldOrdering extends JFormField
@@ -46,24 +48,24 @@ class JFormFieldOrdering extends JFormField
 		$attr .= $this->element['onchange'] ? ' onchange="'.(string) $this->element['onchange'].'"' : '';
 
 		// Get some field values from the form.
-		$bannerId	= (int) $this->form->getValue('id');
+		$ditemId	= (int) $this->form->getValue('id');
 		$categoryId	= (int) $this->form->getValue('catid');
 
 		// Build the query for the ordering list.
 		$query = 'SELECT ordering AS value, name AS text' .
-				' FROM #__banners' .
+				' FROM #__ditems' .
 				' WHERE catid = ' . (int) $categoryId .
 				' ORDER BY ordering';
 
 		// Create a read-only list (no name) with a hidden input to store the value.
 		if ((string) $this->element['readonly'] == 'true')
 		{
-			$html[] = JHtml::_('list.ordering', '', $query, trim($attr), $this->value, $bannerId ? 0 : 1);
+			$html[] = JHtml::_('list.ordering', '', $query, trim($attr), $this->value, $ditemId ? 0 : 1);
 			$html[] = '<input type="hidden" name="'.$this->name.'" value="'.$this->value.'"/>';
 		}
 		// Create a regular list.
 		else {
-			$html[] = JHtml::_('list.ordering', $this->name, $query, trim($attr), $this->value, $bannerId ? 0 : 1);
+			$html[] = JHtml::_('list.ordering', $this->name, $query, trim($attr), $this->value, $ditemId ? 0 : 1);
 		}
 
 		return implode($html);

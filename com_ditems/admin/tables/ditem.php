@@ -1,38 +1,37 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\tables\ditem.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banner table
+ * Ditem table
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.5
+ * @subpackage  com_ditems
  */
-class BannersTableBanner extends JTable
+class DitemsTableDitem extends JTable
 {
 	/**
 	 * Constructor
-	 *
-	 * @since   1.5
 	 */
 	public function __construct(&$_db)
 	{
-		parent::__construct('#__banners', 'id', $_db);
+		parent::__construct('#__ditems', 'id', $_db);
 		$date = JFactory::getDate();
 		$this->created = $date->toSql();
 	}
 
 	public function clicks()
 	{
-		$query = 'UPDATE #__banners'
+		$query = 'UPDATE #__ditems'
 		. ' SET clicks = (clicks + 1)'
 		. ' WHERE id = ' . (int) $this->id;
 
@@ -45,7 +44,6 @@ class BannersTableBanner extends JTable
 	 *
 	 * @return  boolean
 	 * @see     JTable::check
-	 * @since   1.5
 	 */
 	public function check()
 	{
@@ -96,12 +94,12 @@ class BannersTableBanner extends JTable
 			$registry->loadArray($array['params']);
 
 			if ((int) $registry->get('width', 0) < 0){
-				$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_NEGATIVE_NOT_PERMITTED', JText::_('COM_BANNERS_FIELD_WIDTH_LABEL')));
+				$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_NEGATIVE_NOT_PERMITTED', JText::_('COM_DITEMS_FIELD_WIDTH_LABEL')));
 				return false;
 			}
 
 			if ((int) $registry->get('height', 0) < 0){
-				$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_NEGATIVE_NOT_PERMITTED', JText::_('COM_BANNERS_FIELD_HEIGHT_LABEL')));
+				$this->setError(JText::sprintf('JLIB_DATABASE_ERROR_NEGATIVE_NOT_PERMITTED', JText::_('COM_DITEMS_FIELD_HEIGHT_LABEL')));
 				return false;
 			}
 
@@ -135,13 +133,13 @@ class BannersTableBanner extends JTable
 			$purchase_type = $this->purchase_type;
 			if ($purchase_type < 0 && $this->cid)
 			{
-				$client = JTable::getInstance('Client', 'BannersTable');
-				$client->load($this->cid);
-				$purchase_type = $client->purchase_type;
+				$dname = JTable::getInstance('Client', 'DitemsTable');
+				$dname->load($this->cid);
+				$purchase_type = $dname->purchase_type;
 			}
 			if ($purchase_type < 0)
 			{
-				$params = JComponentHelper::getParams('com_banners');
+				$params = JComponentHelper::getParams('com_ditems');
 				$purchase_type = $params->get('purchase_type');
 			}
 
@@ -173,17 +171,17 @@ class BannersTableBanner extends JTable
 		else
 		{
 			// Get the old row
-			$oldrow = JTable::getInstance('Banner', 'BannersTable');
+			$oldrow = JTable::getInstance('Ditem', 'DitemsTable');
 			if (!$oldrow->load($this->id) && $oldrow->getError())
 			{
 				$this->setError($oldrow->getError());
 			}
 
 			// Verify that the alias is unique
-			$table = JTable::getInstance('Banner', 'BannersTable');
+			$table = JTable::getInstance('Ditem', 'DitemsTable');
 			if ($table->load(array('alias' => $this->alias, 'catid' => $this->catid)) && ($table->id != $this->id || $this->id == 0))
 			{
-				$this->setError(JText::_('COM_BANNERS_ERROR_UNIQUE_ALIAS'));
+				$this->setError(JText::_('COM_DITEMS_ERROR_UNIQUE_ALIAS'));
 				return false;
 			}
 
@@ -210,7 +208,6 @@ class BannersTableBanner extends JTable
 	 * @param   integer The publishing state. eg. [0 = unpublished, 1 = published, 2=archived, -2=trashed]
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
-	 * @since   1.6
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{
@@ -236,12 +233,12 @@ class BannersTableBanner extends JTable
 		}
 
 		// Get an instance of the table
-		$table = JTable::getInstance('Banner', 'BannersTable');
+		$table = JTable::getInstance('Ditem', 'DitemsTable');
 
 		// For all keys
 		foreach ($pks as $pk)
 		{
-			// Load the banner
+			// Load the ditem
 			if (!$table->load($pk))
 			{
 				$this->setError($table->getError());
@@ -304,12 +301,12 @@ class BannersTableBanner extends JTable
 		}
 
 		// Get an instance of the table
-		$table = JTable::getInstance('Banner', 'BannersTable');
+		$table = JTable::getInstance('Ditem', 'DitemsTable');
 
 		// For all keys
 		foreach ($pks as $pk)
 		{
-			// Load the banner
+			// Load the ditem
 			if (!$table->load($pk))
 			{
 				$this->setError($table->getError());

@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\imptotal.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,7 +15,7 @@ defined('JPATH_BASE') or die;
  * Impressions Field class for the Joomla Framework.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
 class JFormFieldImpTotal extends JFormField
@@ -42,6 +44,6 @@ class JFormFieldImpTotal extends JFormField
 
 		return '<input type="text" name="'.$this->name.'" id="'.$this->id.'" size="9" value="'.htmlspecialchars($value, ENT_COMPAT, 'UTF-8').'" '.$class.$onchange.' />
 		<fieldset class="checkboxes impunlimited"><input id="'.$this->id.'_unlimited" type="checkbox"'.$checked.$onclick.' />
-		<label for="'.$this->id.'_unlimited" id="jform-imp" type="text">'.JText::_('COM_BANNERS_UNLIMITED').'</label></fieldset>';
+		<label for="'.$this->id.'_unlimited" id="jform-imp" type="text">'.JText::_('COM_DITEMS_UNLIMITED').'</label></fieldset>';
 	}
 }

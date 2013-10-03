@@ -1,28 +1,28 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\controllers\dnames.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Clients list controller class.
+ * Dnames list controller class.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersControllerClients extends JControllerAdmin
+class DitemsControllerDnames extends JControllerAdmin
 {
 	/**
 	 * @var		string	The prefix to use with controller messages.
-	 * @since   1.6
 	 */
-	protected $text_prefix = 'COM_BANNERS_CLIENTS';
+	protected $text_prefix = 'COM_DITEMS_DNAMES';
 
 	/**
 	 * Method to get a model object, loading it if required.
@@ -32,10 +32,8 @@ class BannersControllerClients extends JControllerAdmin
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  object  The model.
-	 *
-	 * @since   1.6
 	 */
-	public function getModel($name = 'Client', $prefix = 'BannersModel', $config = array('ignore_request' => true))
+	public function getModel($name = 'Dname', $prefix = 'DitemsModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;

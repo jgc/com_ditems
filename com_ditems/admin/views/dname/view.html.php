@@ -1,24 +1,26 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\dname\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
-JLoader::register('BannersHelper', JPATH_COMPONENT.'/helpers/banners.php');
+JLoader::register('DitemsHelper', JPATH_COMPONENT.'/helpers/ditems.php');
 
 /**
- * View to edit a client.
+ * View to edit a dname.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.5
  */
-class BannersViewClient extends JViewLegacy
+class DitemsViewDname extends JViewLegacy
 {
 	protected $form;
 
@@ -58,36 +60,36 @@ class BannersViewClient extends JViewLegacy
 		$user		= JFactory::getUser();
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $user->get('id'));
-		$canDo		= BannersHelper::getActions();
+		$canDo		= DitemsHelper::getActions();
 
-		JToolbarHelper::title($isNew ? JText::_('COM_BANNERS_MANAGER_CLIENT_NEW') : JText::_('COM_BANNERS_MANAGER_CLIENT_EDIT'), 'banners-clients.png');
+		JToolbarHelper::title($isNew ? JText::_('COM_DITEMS_MANAGER_DNAME_NEW') : JText::_('COM_DITEMS_MANAGER_DNAME_EDIT'), 'ditems-dnames.png');
 
 		// If not checked out, can save the item.
 		if (!$checkedOut && ($canDo->get('core.edit')||$canDo->get('core.create')))
 		{
-			JToolbarHelper::apply('client.apply');
-			JToolbarHelper::save('client.save');
+			JToolbarHelper::apply('dname.apply');
+			JToolbarHelper::save('dname.save');
 		}
 		if (!$checkedOut && $canDo->get('core.create')) {
 
-			JToolbarHelper::save2new('client.save2new');
+			JToolbarHelper::save2new('dname.save2new');
 		}
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create'))
 		{
-			JToolbarHelper::save2copy('client.save2copy');
+			JToolbarHelper::save2copy('dname.save2copy');
 		}
 
 		if (empty($this->item->id))
 		{
-			JToolbarHelper::cancel('client.cancel');
+			JToolbarHelper::cancel('dname.cancel');
 		}
 		else
 		{
-			JToolbarHelper::cancel('client.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('dname.cancel', 'JTOOLBAR_CLOSE');
 		}
 
 		JToolbarHelper::divider();
-		JToolbarHelper::help('JHELP_COMPONENTS_BANNERS_CLIENTS_EDIT');
+		JToolbarHelper::help('JHELP_COMPONENTS_DITEMS_DNAMES_EDIT');
 	}
 }

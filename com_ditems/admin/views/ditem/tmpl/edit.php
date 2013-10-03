@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\ditem\tmpl\edit.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -16,9 +18,9 @@ JHtml::_('formbehavior.chosen', 'select');
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'banner.cancel' || document.formvalidator.isValid(document.id('banner-form')))
+		if (task == 'ditem.cancel' || document.formvalidator.isValid(document.id('ditem-form')))
 		{
-			Joomla.submitform(task, document.getElementById('banner-form'));
+			Joomla.submitform(task, document.getElementById('ditem-form'));
 		}
 	}
 	window.addEvent('domready', function()
@@ -44,17 +46,17 @@ JHtml::_('formbehavior.chosen', 'select');
 	});
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_banners&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="banner-form" class="form-validate form-horizontal">
+<form action="<?php echo JRoute::_('index.php?option=com_ditems&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="ditem-form" class="form-validate form-horizontal">
 
 <?php echo JLayoutHelper::render('joomla.edit.item_title', $this); ?>
 
-<!-- Begin Banner -->
+<!-- Begin Ditem -->
 <div class="span10 form-horizontal">
 
 	<fieldset>
 		<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'details')); ?>
 
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_BANNERS_BANNER_DETAILS', true)); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'details', JText::_('COM_DITEMS_DITEM_DETAILS', true)); ?>
 				<div class="control-group">
 					<div class="control-label">
 						<?php echo $this->form->getLabel('name'); ?>
@@ -101,10 +103,10 @@ JHtml::_('formbehavior.chosen', 'select');
 				</div>
 				<div class="control-group" id="custom">
 					<div class="control-label">
-						<?php echo $this->form->getLabel('custombannercode'); ?>
+						<?php echo $this->form->getLabel('customditemcode'); ?>
 					</div>
 					<div class="controls">
-						<?php echo $this->form->getInput('custombannercode'); ?>
+						<?php echo $this->form->getInput('customditemcode'); ?>
 					</div>
 				</div>
 				<div class="control-group" id="url">
@@ -133,7 +135,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				</div>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_BANNERS_GROUP_LABEL_PUBLISHING_DETAILS', true)); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'publishing', JText::_('COM_DITEMS_GROUP_LABEL_PUBLISHING_DETAILS', true)); ?>
 				<?php foreach ($this->form->getFieldset('publish') as $field) : ?>
 					<div class="control-group">
 						<div class="control-label">
@@ -146,7 +148,7 @@ JHtml::_('formbehavior.chosen', 'select');
 				<?php endforeach; ?>
 			<?php echo JHtml::_('bootstrap.endTab'); ?>
 
-			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'otherparams', JText::_('COM_BANNERS_GROUP_LABEL_BANNER_DETAILS', true)); ?>
+			<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'otherparams', JText::_('COM_DITEMS_GROUP_LABEL_DITEM_DETAILS', true)); ?>
 				<?php foreach ($this->form->getFieldset('otherparams') as $field) : ?>
 					<div class="control-group">
 						<div class="control-label">

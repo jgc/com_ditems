@@ -1,22 +1,23 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\controller.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banners master display controller.
+ * Ditems master display controller.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersController extends JControllerLegacy
+class DitemsController extends JControllerLegacy
 {
 	/**
 	 * Method to display a view.
@@ -29,29 +30,29 @@ class BannersController extends JControllerLegacy
 	 */
 	public function display($cachable = false, $urlparams = false)
 	{
-		require_once JPATH_COMPONENT.'/helpers/banners.php';
-		BannersHelper::updateReset();
+		require_once JPATH_COMPONENT.'/helpers/ditems.php';
+		DitemsHelper::updateReset();
 
-		$view   = $this->input->get('view', 'banners');
+		$view   = $this->input->get('view', 'ditems');
 		$layout = $this->input->get('layout', 'default');
 		$id     = $this->input->getInt('id');
 
 		// Check for edit form.
-		if ($view == 'banner' && $layout == 'edit' && !$this->checkEditId('com_banners.edit.banner', $id)) {
+		if ($view == 'ditem' && $layout == 'edit' && !$this->checkEditId('com_ditems.edit.ditem', $id)) {
 
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_banners&view=banners', false));
+			$this->setRedirect(JRoute::_('index.php?option=com_ditems&view=ditems', false));
 
 			return false;
 		}
-		elseif ($view == 'client' && $layout == 'edit' && !$this->checkEditId('com_banners.edit.client', $id)) {
+		elseif ($view == 'dname' && $layout == 'edit' && !$this->checkEditId('com_ditems.edit.dname', $id)) {
 
 			// Somehow the person just went to the form - we don't allow that.
 			$this->setError(JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
 			$this->setMessage($this->getError(), 'error');
-			$this->setRedirect(JRoute::_('index.php?option=com_banners&view=clients', false));
+			$this->setRedirect(JRoute::_('index.php?option=com_ditems&view=dnames', false));
 
 			return false;
 		}

@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\clicks.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,7 +15,7 @@ defined('JPATH_BASE') or die;
  * Clicks Field class for the Joomla Framework.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
 class JFormFieldClicks extends JFormField
@@ -36,6 +38,6 @@ class JFormFieldClicks extends JFormField
 	{
 		$onclick	= ' onclick="document.id(\''.$this->id.'\').value=\'0\';"';
 
-		return '<input class="input-small" type="text" name="' . $this->name . '" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '" readonly="readonly" /> <a class="btn" ' . $onclick . '><i class="icon-refresh"></i> ' . JText::_('COM_BANNERS_RESET_CLICKS') . '</a>';
+		return '<input class="input-small" type="text" name="' . $this->name . '" id="' . $this->id . '" value="' . htmlspecialchars($this->value, ENT_COMPAT, 'UTF-8') . '" readonly="readonly" /> <a class="btn" ' . $onclick . '><i class="icon-refresh"></i> ' . JText::_('COM_DITEMS_RESET_CLICKS') . '</a>';
 	}
 }

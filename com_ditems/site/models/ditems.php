@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        site\models\ditems.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -12,13 +14,12 @@ defined('_JEXEC') or die;
 JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
 
 /**
- * Banners model for the Joomla Banners component.
+ * Ditems model for the Joomla Ditems component.
  *
  * @package     Joomla.Site
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersModelBanners extends JModelList
+class DitemsModelDitems extends JModelList
 {
 	/**
 	 * Method to get a store id based on model configuration state.
@@ -37,7 +38,7 @@ class BannersModelBanners extends JModelList
 		// Compile the store id.
 		$id .= ':' . $this->getState('filter.search');
 		$id .= ':' . $this->getState('filter.tag_search');
-		$id .= ':' . $this->getState('filter.client_id');
+		$id .= ':' . $this->getState('filter.dname_id');
 		$id .= ':' . serialize($this->getState('filter.category_id'));
 		$id .= ':' . serialize($this->getState('filter.keywords'));
 
@@ -45,9 +46,9 @@ class BannersModelBanners extends JModelList
 	}
 
 	/**
-	 * Gets a list of banners
+	 * Gets a list of ditems
 	 *
-	 * @return  array  An array of banner objects.
+	 * @return  array  An array of ditem objects.
 	 * @since   1.6
 	 */
 	protected function getListQuery()
@@ -56,7 +57,7 @@ class BannersModelBanners extends JModelList
 		$query = $db->getQuery(true);
 		$ordering = $this->getState('filter.ordering');
 		$tagSearch = $this->getState('filter.tag_search');
-		$cid = $this->getState('filter.client_id');
+		$cid = $this->getState('filter.dname_id');
 		$categoryId = $this->getState('filter.category_id');
 		$keywords = $this->getState('filter.keywords');
 		$randomise = ($ordering == 'random');
@@ -69,12 +70,12 @@ class BannersModelBanners extends JModelList
 				'a.clickurl as clickurl,' .
 				'a.cid as cid,' .
 				'a.params as params,' .
-				'a.custombannercode as custombannercode,' .
+				'a.customditemcode as customditemcode,' .
 				'a.track_impressions as track_impressions,' .
-				'cl.track_impressions as client_track_impressions'
+				'cl.track_impressions as dname_track_impressions'
 		)
-			->from('#__banners as a')
-			->join('LEFT', '#__banner_clients AS cl ON cl.id = a.cid')
+			->from('#__ditems as a')
+			->join('LEFT', '#__ditem_dnames AS cl ON cl.id = a.cid')
 			->where('a.state=1')
 			->where('(' . $query->currentTimestamp() . ' >= a.publish_up OR a.publish_up = ' . $nullDate . ')')
 			->where('(' . $query->currentTimestamp() . ' <= a.publish_down OR a.publish_down = ' . $nullDate . ')')
@@ -135,7 +136,7 @@ class BannersModelBanners extends JModelList
 			else
 			{
 				$temp = array();
-				$config = JComponentHelper::getParams('com_banners');
+				$config = JComponentHelper::getParams('com_ditems');
 				$prefix = $config->get('metakey_prefix');
 
 				foreach ($keywords as $keyword)
@@ -173,7 +174,7 @@ class BannersModelBanners extends JModelList
 	}
 
 	/**
-	 * Get a list of banners.
+	 * Get a list of ditems.
 	 *
 	 * @return  array
 	 * @since   1.6
@@ -195,7 +196,7 @@ class BannersModelBanners extends JModelList
 	}
 
 	/**
-	 * Makes impressions on a list of banners
+	 * Makes impressions on a list of ditems
 	 *
 	 * @return  void
 	 * @since   1.6
@@ -212,7 +213,7 @@ class BannersModelBanners extends JModelList
 			// Increment impression made
 			$id = $item->id;
 			$query->clear()
-				->update('#__banners')
+				->update('#__ditems')
 				->set('impmade = (impmade + 1)')
 				->where('id = ' . (int) $id);
 			$db->setQuery($query);
@@ -230,12 +231,12 @@ class BannersModelBanners extends JModelList
 			$trackImpressions = $item->track_impressions;
 			if ($trackImpressions < 0 && $item->cid)
 			{
-				$trackImpressions = $item->client_track_impressions;
+				$trackImpressions = $item->dname_track_impressions;
 			}
 
 			if ($trackImpressions < 0)
 			{
-				$config = JComponentHelper::getParams('com_banners');
+				$config = JComponentHelper::getParams('com_ditems');
 				$trackImpressions = $config->get('track_impressions');
 			}
 
@@ -244,9 +245,9 @@ class BannersModelBanners extends JModelList
 				// is track already created ?
 				$query->clear()
 					->select($db->quoteName('count'))
-					->from('#__banner_tracks')
+					->from('#__ditem_tracks')
 					->where('track_type=1')
-					->where('banner_id=' . (int) $id)
+					->where('ditem_id=' . (int) $id)
 					->where('track_date=' . $db->quote($trackDate));
 
 				$db->setQuery($query);
@@ -267,21 +268,21 @@ class BannersModelBanners extends JModelList
 				if ($count)
 				{
 					// update count
-					$query->update('#__banner_tracks')
+					$query->update('#__ditem_tracks')
 						->set($db->quoteName('count') . ' = (' . $db->quote('count') . ' + 1)')
 						->where('track_type=1')
-						->where('banner_id=' . (int) $id)
+						->where('ditem_id=' . (int) $id)
 						->where('track_date=' . $db->quote($trackDate));
 				}
 				else
 				{
 					// insert new count
 					//sqlsrv change
-					$query->insert('#__banner_tracks')
+					$query->insert('#__ditem_tracks')
 						->columns(
 							array(
 								$db->quoteName('count'), $db->quoteName('track_type'),
-								$db->quoteName('banner_id'), $db->quoteName('track_date')
+								$db->quoteName('ditem_id'), $db->quoteName('track_date')
 							)
 						)
 						->values('1, 1, ' . (int) $id . ', ' . $db->quote($trackDate));

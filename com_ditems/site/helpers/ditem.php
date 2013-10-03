@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_banners
+* @subpackage  	com_ditems
+ * @file        site\helpers\ditem.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -11,9 +13,9 @@ defined('_JEXEC') or die;
 
 /**
  * @package     Joomla.Site
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  */
-abstract class BannerHelper
+abstract class DitemHelper
 {
 	/**
 	 * Checks if a URL is an image

@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\ditemdname.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -11,16 +13,16 @@ defined('JPATH_BASE') or die;
 
 JFormHelper::loadFieldClass('list');
 
-require_once __DIR__ . '/../../helpers/banners.php';
+require_once __DIR__ . '/../../helpers/ditems.php';
 
 /**
- * Bannerclient Field class for the Joomla Framework.
+ * Ditemdname Field class for the Joomla Framework.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class JFormFieldBannerClient extends JFormFieldList
+class JFormFieldDitemDname extends JFormFieldList
 {
 	/**
 	 * The form field type.
@@ -28,7 +30,7 @@ class JFormFieldBannerClient extends JFormFieldList
 	 * @var		string
 	 * @since   1.6
 	 */
-	protected $type = 'BannerClient';
+	protected $type = 'DitemDname';
 
 	/**
 	 * Method to get the field options.
@@ -38,6 +40,6 @@ class JFormFieldBannerClient extends JFormFieldList
 	 */
 	public function getOptions()
 	{
-		return BannersHelper::getClientOptions();
+		return DitemsHelper::getDnameOptions();
 	}
 }

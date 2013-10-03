@@ -3,8 +3,8 @@
 	<fieldset name="details">
 
 		<field name="compressed" type="radio" class="btn-group"
-			label="COM_BANNERS_FIELD_COMPRESSED_LABEL"
-			description="COM_BANNERS_FIELD_COMPRESSED_DESC"
+			label="COM_DITEMS_FIELD_COMPRESSED_LABEL"
+			description="COM_DITEMS_FIELD_COMPRESSED_DESC"
 			default="0"
 		>
 			<option value="0">JNO</option>
@@ -13,7 +13,7 @@
 
 		<field name="basename" type="text"
 			class="inputbox" size="40"
-			label="COM_BANNERS_FIELD_BASENAME_LABEL" description="COM_BANNERS_FIELD_BASENAME_DESC" />
+			label="COM_DITEMS_FIELD_BASENAME_LABEL" description="COM_DITEMS_FIELD_BASENAME_DESC" />
 
 	</fieldset>
 </form>

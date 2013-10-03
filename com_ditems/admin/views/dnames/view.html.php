@@ -1,22 +1,24 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\dnames\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * View class for a list of clients.
+ * View class for a list of dnames.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersViewClients extends JViewLegacy
+class DitemsViewDnames extends JViewLegacy
 {
 	protected $items;
 
@@ -40,7 +42,7 @@ class BannersViewClients extends JViewLegacy
 			return false;
 		}
 
-		BannersHelper::addSubmenu('clients');
+		DitemsHelper::addSubmenu('dnames');
 
 		$this->addToolbar();
 		$this->sidebar = JHtmlSidebar::render();
@@ -54,42 +56,42 @@ class BannersViewClients extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		require_once JPATH_COMPONENT.'/helpers/banners.php';
+		require_once JPATH_COMPONENT.'/helpers/ditems.php';
 
-		$canDo	= BannersHelper::getActions();
+		$canDo	= DitemsHelper::getActions();
 
-		JToolbarHelper::title(JText::_('COM_BANNERS_MANAGER_CLIENTS'), 'banners-clients.png');
+		JToolbarHelper::title(JText::_('COM_DITEMS_MANAGER_DNAMES'), 'ditems-dnames.png');
 		if ($canDo->get('core.create'))
 		{
-			JToolbarHelper::addNew('client.add');
+			JToolbarHelper::addNew('dname.add');
 		}
 		if ($canDo->get('core.edit'))
 		{
-			JToolbarHelper::editList('client.edit');
+			JToolbarHelper::editList('dname.edit');
 		}
 		if ($canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::publish('clients.publish', 'JTOOLBAR_PUBLISH', true);
-			JToolbarHelper::unpublish('clients.unpublish', 'JTOOLBAR_UNPUBLISH', true);
-			JToolbarHelper::archiveList('clients.archive');
-			JToolbarHelper::checkin('clients.checkin');
+			JToolbarHelper::publish('dnames.publish', 'JTOOLBAR_PUBLISH', true);
+			JToolbarHelper::unpublish('dnames.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+			JToolbarHelper::archiveList('dnames.archive');
+			JToolbarHelper::checkin('dnames.checkin');
 		}
 		if ($this->state->get('filter.state') == -2 && $canDo->get('core.delete'))
 		{
-			JToolbarHelper::deleteList('', 'clients.delete', 'JTOOLBAR_EMPTY_TRASH');
+			JToolbarHelper::deleteList('', 'dnames.delete', 'JTOOLBAR_EMPTY_TRASH');
 		} elseif ($canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::trash('clients.trash');
+			JToolbarHelper::trash('dnames.trash');
 		}
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolbarHelper::preferences('com_banners');
+			JToolbarHelper::preferences('com_ditems');
 		}
 
-		JToolbarHelper::help('JHELP_COMPONENTS_BANNERS_CLIENTS');
+		JToolbarHelper::help('JHELP_COMPONENTS_DITEMS_DNAMES');
 
-		JHtmlSidebar::setAction('index.php?option=com_banners&view=clients');
+		JHtmlSidebar::setAction('index.php?option=com_ditems&view=dnames');
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_PUBLISHED'),
@@ -108,10 +110,10 @@ class BannersViewClients extends JViewLegacy
 	{
 		return array(
 			'a.status' => JText::_('JSTATUS'),
-			'a.name' => JText::_('COM_BANNERS_HEADING_CLIENT'),
-			'contact' => JText::_('COM_BANNERS_HEADING_CONTACT'),
-			'client_name' => JText::_('COM_BANNERS_HEADING_CLIENT'),
-			'nbanners' => JText::_('COM_BANNERS_HEADING_ACTIVE'),
+			'a.name' => JText::_('COM_DITEMS_HEADING_DNAME'),
+			'contact' => JText::_('COM_DITEMS_HEADING_CONTACT'),
+			'dname_name' => JText::_('COM_DITEMS_HEADING_DNAME'),
+			'nditems' => JText::_('COM_DITEMS_HEADING_ACTIVE'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);
 	}

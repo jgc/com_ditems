@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\download.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,12 +15,12 @@ defined('_JEXEC') or die;
  * Download model.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.5
  */
-class BannersModelDownload extends JModelForm
+class DitemsModelDownload extends JModelForm
 {
-	protected $_context = 'com_banners.tracks';
+	protected $_context = 'com_ditems.tracks';
 
 	/**
 	 * Method to auto-populate the model state.
@@ -50,7 +52,7 @@ class BannersModelDownload extends JModelForm
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_banners.download', 'download', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_ditems.download', 'download', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form))
 		{
 			return false;
@@ -72,7 +74,7 @@ class BannersModelDownload extends JModelForm
 			'compressed'	=> $this->getState('compressed')
 		);
 
-		$this->preprocessData('com_banners.download', $data);
+		$this->preprocessData('com_ditems.download', $data);
 
 		return $data;
 	}

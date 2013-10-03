@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\ditems\tmpl\default.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -20,14 +22,14 @@ $user		= JFactory::getUser();
 $userId		= $user->get('id');
 $listOrder	= $this->escape($this->state->get('list.ordering'));
 $listDirn	= $this->escape($this->state->get('list.direction'));
-$canOrder	= $user->authorise('core.edit.state', 'com_banners.category');
+$canOrder	= $user->authorise('core.edit.state', 'com_ditems.category');
 $archived	= $this->state->get('filter.published') == 2 ? true : false;
 $trashed	= $this->state->get('filter.published') == -2 ? true : false;
 $params		= (isset($this->state->params)) ? $this->state->params : new JObject;
 $saveOrder	= $listOrder == 'ordering';
 if ($saveOrder)
 {
-	$saveOrderingUrl = 'index.php?option=com_banners&task=banners.saveOrderAjax&tmpl=component';
+	$saveOrderingUrl = 'index.php?option=com_ditems&task=ditems.saveOrderAjax&tmpl=component';
 	JHtml::_('sortablelist.sortable', 'articleList', 'adminForm', strtolower($listDirn), $saveOrderingUrl);
 }
 $sortFields = $this->getSortFields();
@@ -49,7 +51,7 @@ $sortFields = $this->getSortFields();
 		Joomla.tableOrdering(order, dirn, '');
 	}
 </script>
-<form action="<?php echo JRoute::_('index.php?option=com_banners&view=banners'); ?>" method="post" name="adminForm" id="adminForm">
+<form action="<?php echo JRoute::_('index.php?option=com_ditems&view=ditems'); ?>" method="post" name="adminForm" id="adminForm">
 <?php if (!empty( $this->sidebar)) : ?>
 	<div id="j-sidebar-container" class="span2">
 		<?php echo $this->sidebar; ?>
@@ -60,8 +62,8 @@ $sortFields = $this->getSortFields();
 <?php endif;?>
 		<div id="filter-bar" class="btn-toolbar">
 			<div class="filter-search btn-group pull-left">
-				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_BANNERS_SEARCH_IN_TITLE');?></label>
-				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_BANNERS_SEARCH_IN_TITLE'); ?>" />
+				<label for="filter_search" class="element-invisible"><?php echo JText::_('COM_DITEMS_SEARCH_IN_TITLE');?></label>
+				<input type="text" name="filter_search" id="filter_search" placeholder="<?php echo JText::_('JSEARCH_FILTER'); ?>" value="<?php echo $this->escape($this->state->get('filter.search')); ?>" class="hasTooltip" title="<?php echo JHtml::tooltipText('COM_DITEMS_SEARCH_IN_TITLE'); ?>" />
 			</div>
 			<div class="btn-group pull-left">
 				<button type="submit" class="btn hasTooltip" title="<?php echo JHtml::tooltipText('JSEARCH_FILTER_SUBMIT'); ?>"><i class="icon-search"></i></button>
@@ -101,19 +103,19 @@ $sortFields = $this->getSortFields();
 						<?php echo JHtml::_('grid.sort', 'JSTATUS', 'a.published', $listDirn, $listOrder); ?>
 					</th>
 					<th>
-						<?php echo JHtml::_('grid.sort', 'COM_BANNERS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_NAME', 'a.name', $listDirn, $listOrder); ?>
 					</th>
 					<th width="1%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_BANNERS_HEADING_STICKY', 'a.sticky', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_STICKY', 'a.sticky', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_BANNERS_HEADING_CLIENT', 'client_name', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_CLIENT', 'client_name', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_BANNERS_HEADING_IMPRESSIONS', 'impmade', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_IMPRESSIONS', 'impmade', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap center hidden-phone">
-						<?php echo JHtml::_('grid.sort', 'COM_BANNERS_HEADING_CLICKS', 'clicks', $listDirn, $listOrder); ?>
+						<?php echo JHtml::_('grid.sort', 'COM_DITEMS_HEADING_CLICKS', 'clicks', $listDirn, $listOrder); ?>
 					</th>
 					<th width="10%" class="nowrap hidden-phone">
 						<?php echo JHtml::_('grid.sort', 'JGRID_HEADING_LANGUAGE', 'a.language', $listDirn, $listOrder); ?>
@@ -133,11 +135,11 @@ $sortFields = $this->getSortFields();
 			<tbody>
 			<?php foreach ($this->items as $i => $item) :
 				$ordering  = ($listOrder == 'ordering');
-				$item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_banners&task=edit&type=other&cid[]='. $item->catid);
-				$canCreate  = $user->authorise('core.create',     'com_banners.category.' . $item->catid);
-				$canEdit    = $user->authorise('core.edit',       'com_banners.category.' . $item->catid);
+				$item->cat_link = JRoute::_('index.php?option=com_categories&extension=com_ditems&task=edit&type=other&cid[]='. $item->catid);
+				$canCreate  = $user->authorise('core.create',     'com_ditems.category.' . $item->catid);
+				$canEdit    = $user->authorise('core.edit',       'com_ditems.category.' . $item->catid);
 				$canCheckin = $user->authorise('core.manage',     'com_checkin') || $item->checked_out == $userId || $item->checked_out == 0;
-				$canChange  = $user->authorise('core.edit.state', 'com_banners.category.' . $item->catid) && $canCheckin;
+				$canChange  = $user->authorise('core.edit.state', 'com_ditems.category.' . $item->catid) && $canCheckin;
 				?>
 				<tr class="row<?php echo $i % 2; ?>" sortable-group-id="<?php echo $item->catid?>">
 					<td class="order nowrap center hidden-phone">
@@ -164,15 +166,15 @@ $sortFields = $this->getSortFields();
 						<?php echo JHtml::_('grid.id', $i, $item->id); ?>
 					</td>
 					<td class="center">
-						<?php echo JHtml::_('jgrid.published', $item->state, $i, 'banners.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
+						<?php echo JHtml::_('jgrid.published', $item->state, $i, 'ditems.', $canChange, 'cb', $item->publish_up, $item->publish_down); ?>
 					</td>
 					<td class="nowrap has-context">
 						<div class="pull-left">
 							<?php if ($item->checked_out) : ?>
-								<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'banners.', $canCheckin); ?>
+								<?php echo JHtml::_('jgrid.checkedout', $i, $item->editor, $item->checked_out_time, 'ditems.', $canCheckin); ?>
 							<?php endif; ?>
 							<?php if ($canEdit) : ?>
-								<a href="<?php echo JRoute::_('index.php?option=com_banners&task=banner.edit&id='.(int) $item->id); ?>">
+								<a href="<?php echo JRoute::_('index.php?option=com_ditems&task=ditem.edit&id='.(int) $item->id); ?>">
 									<?php echo $this->escape($item->name); ?></a>
 							<?php else : ?>
 								<?php echo $this->escape($item->name); ?>
@@ -184,30 +186,30 @@ $sortFields = $this->getSortFields();
 						<div class="pull-left">
 							<?php
 								// Create dropdown items
-								JHtml::_('dropdown.edit', $item->id, 'banner.');
+								JHtml::_('dropdown.edit', $item->id, 'ditem.');
 								JHtml::_('dropdown.divider');
 								if ($item->state) :
-									JHtml::_('dropdown.unpublish', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.unpublish', 'cb' . $i, 'ditems.');
 								else :
-									JHtml::_('dropdown.publish', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.publish', 'cb' . $i, 'ditems.');
 								endif;
 
 								JHtml::_('dropdown.divider');
 
 								if ($archived) :
-									JHtml::_('dropdown.unarchive', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.unarchive', 'cb' . $i, 'ditems.');
 								else :
-									JHtml::_('dropdown.archive', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.archive', 'cb' . $i, 'ditems.');
 								endif;
 
 								if ($item->checked_out) :
-									JHtml::_('dropdown.checkin', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.checkin', 'cb' . $i, 'ditems.');
 								endif;
 
 								if ($trashed) :
-									JHtml::_('dropdown.untrash', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.untrash', 'cb' . $i, 'ditems.');
 								else :
-									JHtml::_('dropdown.trash', 'cb' . $i, 'banners.');
+									JHtml::_('dropdown.trash', 'cb' . $i, 'ditems.');
 								endif;
 
 								// render dropdown list
@@ -216,13 +218,13 @@ $sortFields = $this->getSortFields();
 						</div>
 					</td>
 					<td class="center hidden-phone">
-						<?php echo JHtml::_('banner.pinned', $item->sticky, $i, $canChange); ?>
+						<?php echo JHtml::_('ditem.pinned', $item->sticky, $i, $canChange); ?>
 					</td>
 					<td class="small hidden-phone">
 						<?php echo $item->client_name;?>
 					</td>
 					<td class="small hidden-phone">
-						<?php echo JText::sprintf('COM_BANNERS_IMPRESSIONS', $item->impmade, $item->imptotal ? $item->imptotal : JText::_('COM_BANNERS_UNLIMITED'));?>
+						<?php echo JText::sprintf('COM_DITEMS_IMPRESSIONS', $item->impmade, $item->imptotal ? $item->imptotal : JText::_('COM_DITEMS_UNLIMITED'));?>
 					</td>
 					<td class="center small hidden-phone">
 						<?php echo $item->clicks;?> -

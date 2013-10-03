@@ -5,10 +5,21 @@ plus capitalized versions
 client -> dname
 clients -> dnames
 plus capitalized versions
-
-Updated sql files to add `version` to first table
-Add sql folder to manifest file
-Update manifest file
+===============================================
+Update files in root
+Update manifest file --> add sql folder
 ?? what do do about {img="class:banners"} - possibly just delete
-Updated language files (site) - 'Banner' as a comment -> 'Diary Item' rather than 'Ditem'
 
+Update files in site root
+Update files in site/helpers folder
+Update files in site/language folder - 'Banner' as a comment -> 'Diary Item' rather than 'Ditem'
+Update files in site/model folder
+
+Update files in admin root
+Update files in admin/controllers folder
+Update files in admin/helpers folder
+Update files in admin/language folder - 'Banner' as a comment -> 'Diary Item' rather than 'Ditem'
+Update files in admin/models
+Update files in admin/sql --> add version to first table
+Update files in admin/tables
+Update files in admin/views

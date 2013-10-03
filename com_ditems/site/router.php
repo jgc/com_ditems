@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        site\router.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,7 +15,7 @@ defined('_JEXEC') or die;
  * @return  array  A named array
  * @return  array
  */
-function BannersBuildRoute(&$query)
+function DitemsBuildRoute(&$query)
 {
 	$segments = array();
 
@@ -37,11 +39,11 @@ function BannersBuildRoute(&$query)
  *
  * Formats:
  *
- * index.php?/banners/task/id/Itemid
+ * index.php?/ditems/task/id/Itemid
  *
- * index.php?/banners/id/Itemid
+ * index.php?/ditems/id/Itemid
  */
-function BannersParseRoute($segments)
+function DitemsParseRoute($segments)
 {
 	$vars = array();
 

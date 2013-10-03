@@ -1,22 +1,24 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\dname.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Client model.
+ * Dname model.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersModelClient extends JModelAdmin
+class DitemsModelDname extends JModelAdmin
 {
 	/**
 	 * Method to test whether a record can be deleted.
@@ -37,10 +39,10 @@ class BannersModelClient extends JModelAdmin
 
 			if (!empty($record->catid))
 			{
-				return $user->authorise('core.delete', 'com_banners.category.'.(int) $record->catid);
+				return $user->authorise('core.delete', 'com_ditems.category.'.(int) $record->catid);
 			}
 			else {
-				return $user->authorise('core.delete', 'com_banners');
+				return $user->authorise('core.delete', 'com_ditems');
 			}
 		}
 	}
@@ -58,11 +60,11 @@ class BannersModelClient extends JModelAdmin
 
 		if (!empty($record->catid))
 		{
-			return $user->authorise('core.edit.state', 'com_banners.category.'.(int) $record->catid);
+			return $user->authorise('core.edit.state', 'com_ditems.category.'.(int) $record->catid);
 		}
 		else
 		{
-			return $user->authorise('core.edit.state', 'com_banners');
+			return $user->authorise('core.edit.state', 'com_ditems');
 		}
 	}
 
@@ -75,7 +77,7 @@ class BannersModelClient extends JModelAdmin
 	 * @return  JTable	A database object
 	 * @since   1.6
 	 */
-	public function getTable($type = 'Client', $prefix = 'BannersTable', $config = array())
+	public function getTable($type = 'Dname', $prefix = 'DitemsTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -91,7 +93,7 @@ class BannersModelClient extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_banners.client', 'client', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_ditems.dname', 'dname', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form))
 		{
 			return false;
@@ -109,14 +111,14 @@ class BannersModelClient extends JModelAdmin
 	protected function loadFormData()
 	{
 		// Check the session for previously entered form data.
-		$data = JFactory::getApplication()->getUserState('com_banners.edit.client.data', array());
+		$data = JFactory::getApplication()->getUserState('com_ditems.edit.dname.data', array());
 
 		if (empty($data))
 		{
 			$data = $this->getItem();
 		}
 
-		$this->preprocessData('com_banners.client', $data);
+		$this->preprocessData('com_ditems.dname', $data);
 
 		return $data;
 	}

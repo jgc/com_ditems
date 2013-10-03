@@ -1,22 +1,24 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\dnames.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Methods supporting a list of banner records.
+ * Methods supporting a list of ditem records.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersModelClients extends JModelList
+class DitemsModelDnames extends JModelList
 {
 	/**
 	 * Constructor.
@@ -36,7 +38,7 @@ class BannersModelClients extends JModelList
 				'state', 'a.state',
 				'checked_out', 'a.checked_out',
 				'checked_out_time', 'a.checked_out_time',
-				'nbanners',
+				'nditems',
 			);
 		}
 
@@ -60,7 +62,7 @@ class BannersModelClients extends JModelList
 		$this->setState('filter.state', $state);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_banners');
+		$params = JComponentHelper::getParams('com_ditems');
 		$this->setState('params', $params);
 
 		// List state information.
@@ -114,11 +116,11 @@ class BannersModelClients extends JModelList
 			)
 		);
 
-		$query->from($db->quoteName('#__banner_clients') . ' AS a');
+		$query->from($db->quoteName('#__ditem_dnames') . ' AS a');
 
-		// Join over the banners for counting
-		$query->select('COUNT(b.id) as nbanners')
-			->join('LEFT', '#__banners AS b ON a.id = b.cid');
+		// Join over the ditems for counting
+		$query->select('COUNT(b.id) as nditems')
+			->join('LEFT', '#__ditems AS b ON a.id = b.cid');
 
 		// Join over the users for the checked out user.
 		$query->select('uc.name AS editor')
@@ -152,7 +154,7 @@ class BannersModelClients extends JModelList
 			}
 		}
 		$ordering_o = $this->getState('list.ordering', 'ordering');
-		if ($ordering_o == 'nbanners')
+		if ($ordering_o == 'nditems')
 		{
 			$ordering_o = 'COUNT(b.id)';
 		}

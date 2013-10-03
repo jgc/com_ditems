@@ -1,28 +1,29 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\ditem.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banner model.
+ * Ditem model.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersModelBanner extends JModelAdmin
+class DitemsModelDitem extends JModelAdmin
 {
 	/**
 	 * @var    string  The prefix to use with controller messages.
 	 * @since  1.6
 	 */
-	protected $text_prefix = 'COM_BANNERS_BANNER';
+	protected $text_prefix = 'COM_DITEMS_DITEM';
 
 	/**
 	 * Method to perform batch operations on an item or a set of items.
@@ -78,9 +79,9 @@ class BannersModelBanner extends JModelAdmin
 			$done = true;
 		}
 
-		if (strlen($commands['client_id']) > 0)
+		if (strlen($commands['dname_id']) > 0)
 		{
-			if (!$this->batchClient($commands['client_id'], $pks, $contexts))
+			if (!$this->batchDname($commands['dname_id'], $pks, $contexts))
 			{
 				return false;
 			}
@@ -111,9 +112,9 @@ class BannersModelBanner extends JModelAdmin
 	}
 
 	/**
-	 * Batch client changes for a group of banners.
+	 * Batch dname changes for a group of ditems.
 	 *
-	 * @param   string  $value     The new value matching a client.
+	 * @param   string  $value     The new value matching a dname.
 	 * @param   array   $pks       An array of row IDs.
 	 * @param   array   $contexts  An array of item contexts.
 	 *
@@ -121,7 +122,7 @@ class BannersModelBanner extends JModelAdmin
 	 *
 	 * @since   2.5
 	 */
-	protected function batchClient($value, $pks, $contexts)
+	protected function batchDname($value, $pks, $contexts)
 	{
 		// Set the variables
 		$user = JFactory::getUser();
@@ -200,7 +201,7 @@ class BannersModelBanner extends JModelAdmin
 
 		// Check that the user has create permission for the component
 		$user = JFactory::getUser();
-		if (!$user->authorise('core.create', 'com_banners.category.' . $categoryId))
+		if (!$user->authorise('core.create', 'com_ditems.category.' . $categoryId))
 		{
 			$this->setError(JText::_('JLIB_APPLICATION_ERROR_BATCH_CANNOT_CREATE'));
 			return false;
@@ -294,7 +295,7 @@ class BannersModelBanner extends JModelAdmin
 
 			if (!empty($record->catid))
 			{
-				return $user->authorise('core.delete', 'com_banners.category.' . (int) $record->catid);
+				return $user->authorise('core.delete', 'com_ditems.category.' . (int) $record->catid);
 			}
 			else
 			{
@@ -319,7 +320,7 @@ class BannersModelBanner extends JModelAdmin
 		// Check against the category.
 		if (!empty($record->catid))
 		{
-			return $user->authorise('core.edit.state', 'com_banners.category.' . (int) $record->catid);
+			return $user->authorise('core.edit.state', 'com_ditems.category.' . (int) $record->catid);
 		}
 		// Default to component settings if category not known.
 		else
@@ -339,7 +340,7 @@ class BannersModelBanner extends JModelAdmin
 	 *
 	 * @since   1.6
 	 */
-	public function getTable($type = 'Banner', $prefix = 'BannersTable', $config = array())
+	public function getTable($type = 'Ditem', $prefix = 'DitemsTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -357,14 +358,14 @@ class BannersModelBanner extends JModelAdmin
 	public function getForm($data = array(), $loadData = true)
 	{
 		// Get the form.
-		$form = $this->loadForm('com_banners.banner', 'banner', array('control' => 'jform', 'load_data' => $loadData));
+		$form = $this->loadForm('com_ditems.ditem', 'ditem', array('control' => 'jform', 'load_data' => $loadData));
 		if (empty($form))
 		{
 			return false;
 		}
 
 		// Determine correct permissions to check.
-		if ($this->getState('banner.id'))
+		if ($this->getState('ditem.id'))
 		{
 			// Existing record. Can only edit in selected categories.
 			$form->setFieldAttribute('catid', 'action', 'core.edit');
@@ -408,20 +409,20 @@ class BannersModelBanner extends JModelAdmin
 	{
 		// Check the session for previously entered form data.
 		$app  = JFactory::getApplication();
-		$data = $app->getUserState('com_banners.edit.banner.data', array());
+		$data = $app->getUserState('com_ditems.edit.ditem.data', array());
 
 		if (empty($data))
 		{
 			$data = $this->getItem();
 
 			// Prime some default values.
-			if ($this->getState('banner.id') == 0)
+			if ($this->getState('ditem.id') == 0)
 			{
-				$data->set('catid', $app->input->getInt('catid', $app->getUserState('com_banners.banners.filter.category_id')));
+				$data->set('catid', $app->input->getInt('catid', $app->getUserState('com_ditems.ditems.filter.category_id')));
 			}
 		}
 
-		$this->preprocessData('com_banners.banner', $data);
+		$this->preprocessData('com_ditems.ditem', $data);
 
 		return $data;
 	}
@@ -500,7 +501,7 @@ class BannersModelBanner extends JModelAdmin
 			if (empty($table->ordering))
 			{
 				$db = JFactory::getDbo();
-				$db->setQuery('SELECT MAX(ordering) FROM #__banners');
+				$db->setQuery('SELECT MAX(ordering) FROM #__ditems');
 				$max = $db->loadResult();
 
 				$table->ordering = $max + 1;

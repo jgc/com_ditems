@@ -1,9 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_banners
+  * @package     Joomla.Administrator
+ * @subpackage  com_ditems
+ * @file        admin\views\tracks\tmp\default.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -48,11 +50,11 @@ $sortFields = $this->getSortFields();
   <?php endif;?>
   	<div id="filter-bar" class="btn-toolbar">
   		<div class="filter-search btn-group pull-left">
-  			<label class="filter-hide-lbl" for="filter_begin"><?php echo JText::_('COM_BANNERS_BEGIN_LABEL'); ?></label>
+  			<label class="filter-hide-lbl" for="filter_begin"><?php echo JText::_('COM_DITEMS_BEGIN_LABEL'); ?></label>
   			<?php echo JHtml::_('calendar', $this->state->get('filter.begin'), 'filter_begin', 'filter_begin', '%Y-%m-%d', array('size' => 10, 'onchange' => "this.form.fireEvent('submit');this.form.submit()"));?>
   		</div>
   		<div class="filter-search btn-group pull-left">
-  			<label class="filter-hide-lbl" for="filter_end"><?php echo JText::_('COM_BANNERS_END_LABEL'); ?></label>
+  			<label class="filter-hide-lbl" for="filter_end"><?php echo JText::_('COM_DITEMS_END_LABEL'); ?></label>
   			<?php echo JHtml::_('calendar', $this->state->get('filter.end'), 'filter_end', 'filter_end', '%Y-%m-%d', array('size' => 10, 'onchange' => "this.form.fireEvent('submit');this.form.submit()"));?>
   		</div>
   		<div class="btn-group pull-right hidden-phone">
@@ -80,16 +82,16 @@ $sortFields = $this->getSortFields();
   		<thead>
   			<tr>
   				<th class="title">
-  					<?php echo JText::_('COM_BANNERS_HEADING_NAME');?>
+  					<?php echo JText::_('COM_DITEMS_HEADING_NAME');?>
   				</th>
   				<th width="20%" class="nowrap">
-  					<?php echo JText::_('COM_BANNERS_HEADING_CLIENT');?>
+  					<?php echo JText::_('COM_DITEMS_HEADING_DNAME');?>
   				</th>
   				<th width="10%" class="nowrap hidden-phone">
-  					<?php echo JText::_('COM_BANNERS_HEADING_TYPE');?>
+  					<?php echo JText::_('COM_DITEMS_HEADING_TYPE');?>
   				</th>
   				<th width="10%" class="nowrap hidden-phone">
-  					<?php echo JText::_('COM_BANNERS_HEADING_COUNT');?>
+  					<?php echo JText::_('COM_DITEMS_HEADING_COUNT');?>
   				</th>
   				<th width="10%" class="nowrap hidden-phone">
   					<?php echo JText::_('JDATE');?>
@@ -116,7 +118,7 @@ $sortFields = $this->getSortFields();
   					<?php echo $item->client_name;?>
   				</td>
   				<td class="small hidden-phone">
-  					<?php echo $item->track_type == 1 ? JText::_('COM_BANNERS_IMPRESSION') : JText::_('COM_BANNERS_CLICK');?>
+  					<?php echo $item->track_type == 1 ? JText::_('COM_DITEMS_IMPRESSION') : JText::_('COM_DITEMS_CLICK');?>
   				</td>
   				<td class="hidden-phone">
   					<?php echo $item->count;?>

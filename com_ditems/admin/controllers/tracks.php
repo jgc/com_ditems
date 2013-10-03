@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\controllers\tracks.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,16 +15,14 @@ defined('_JEXEC') or die;
  * Tracks list controller class.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersControllerTracks extends JControllerLegacy
+class DitemsControllerTracks extends JControllerLegacy
 {
 	/**
-	 * @var		string	The context for persistent state.
-	 * @since   1.6
+	 * @var	string	The context for persistent state.
 	 */
-	protected $context = 'com_banners.tracks';
+	protected $context = 'com_ditems.tracks';
 
 	/**
 	 * Method to get a model object, loading it if required.
@@ -32,10 +32,8 @@ class BannersControllerTracks extends JControllerLegacy
 	 * @param   array   $config  Configuration array for model. Optional.
 	 *
 	 * @return  object  The model.
-	 *
-	 * @since   1.6
 	 */
-	public function getModel($name = 'Tracks', $prefix = 'BannersModel', $config = array('ignore_request' => true))
+	public function getModel($name = 'Tracks', $prefix = 'DitemsModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
@@ -70,8 +68,8 @@ class BannersControllerTracks extends JControllerLegacy
 		$categoryId = $app->getUserState($this->context.'.filter.category_id');
 		$model->setState('filter.category_id', $categoryId);
 
-		$clientId = $app->getUserState($this->context.'.filter.client_id');
-		$model->setState('filter.client_id', $clientId);
+		$dnameId = $app->getUserState($this->context.'.filter.dname_id');
+		$model->setState('filter.dname_id', $dnameId);
 
 		$model->setState('list.limit', 0);
 		$model->setState('list.start', 0);
@@ -84,9 +82,9 @@ class BannersControllerTracks extends JControllerLegacy
 		}
 		else
 		{
-			$this->setMessage(JText::plural('COM_BANNERS_TRACKS_N_ITEMS_DELETED', $count));
+			$this->setMessage(JText::plural('COM_DITEMS_TRACKS_N_ITEMS_DELETED', $count));
 		}
 
-		$this->setRedirect('index.php?option=com_banners&view=tracks');
+		$this->setRedirect('index.php?option=com_ditems&view=tracks');
 	}
 }

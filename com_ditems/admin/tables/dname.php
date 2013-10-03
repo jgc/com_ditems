@@ -1,27 +1,28 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\tables\dname.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Client table
+ * Dname table
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersTableClient extends JTable
+class DitemsTableDname extends JTable
 {
 	public function __construct(&$_db)
 	{
 		$this->checked_out_time = $_db->getNullDate();
-		parent::__construct('#__banner_clients', 'id', $_db);
+		parent::__construct('#__ditem_dnames', 'id', $_db);
 	}
 
 	/**
@@ -34,7 +35,6 @@ class BannersTableClient extends JTable
 	 * @param   integer The publishing state. eg. [0 = unpublished, 1 = published]
 	 * @param   integer The user id of the user performing the operation.
 	 * @return  boolean  True on success.
-	 * @since   1.0.4
 	 */
 	public function publish($pks = null, $state = 1, $userId = 0)
 	{

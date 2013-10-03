@@ -1,22 +1,24 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\ditems\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * View class for a list of banners.
+ * View class for a list of ditems.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersViewBanners extends JViewLegacy
+class DitemsViewDitems extends JViewLegacy
 {
 	protected $categories;
 
@@ -49,10 +51,10 @@ class BannersViewBanners extends JViewLegacy
 			return false;
 		}
 
-		BannersHelper::addSubmenu('banners');
+		DitemsHelper::addSubmenu('ditems');
 
 		$this->addToolbar();
-		require_once JPATH_COMPONENT . '/models/fields/bannerclient.php';
+		require_once JPATH_COMPONENT . '/models/fields/ditemdname.php';
 
 		// Include the component HTML helpers.
 		JHtml::addIncludePath(JPATH_COMPONENT . '/helpers/html');
@@ -70,61 +72,61 @@ class BannersViewBanners extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		require_once JPATH_COMPONENT . '/helpers/banners.php';
+		require_once JPATH_COMPONENT . '/helpers/ditems.php';
 
-		$canDo = BannersHelper::getActions($this->state->get('filter.category_id'));
+		$canDo = DitemsHelper::getActions($this->state->get('filter.category_id'));
 		$user = JFactory::getUser();
 		// Get the toolbar object instance
 		$bar = JToolBar::getInstance('toolbar');
 
-		JToolbarHelper::title(JText::_('COM_BANNERS_MANAGER_BANNERS'), 'banners.png');
-		if (count($user->getAuthorisedCategories('com_banners', 'core.create')) > 0)
+		JToolbarHelper::title(JText::_('COM_DITEMS_MANAGER_DITEMS'), 'ditems.png');
+		if (count($user->getAuthorisedCategories('com_ditems', 'core.create')) > 0)
 		{
-			JToolbarHelper::addNew('banner.add');
+			JToolbarHelper::addNew('ditem.add');
 		}
 
 		if (($canDo->get('core.edit')))
 		{
-			JToolbarHelper::editList('banner.edit');
+			JToolbarHelper::editList('ditem.edit');
 		}
 
 		if ($canDo->get('core.edit.state'))
 		{
 			if ($this->state->get('filter.state') != 2)
 			{
-				JToolbarHelper::publish('banners.publish', 'JTOOLBAR_PUBLISH', true);
-				JToolbarHelper::unpublish('banners.unpublish', 'JTOOLBAR_UNPUBLISH', true);
+				JToolbarHelper::publish('ditems.publish', 'JTOOLBAR_PUBLISH', true);
+				JToolbarHelper::unpublish('ditems.unpublish', 'JTOOLBAR_UNPUBLISH', true);
 			}
 
 			if ($this->state->get('filter.state') != -1)
 			{
 				if ($this->state->get('filter.state') != 2)
 				{
-					JToolbarHelper::archiveList('banners.archive');
+					JToolbarHelper::archiveList('ditems.archive');
 				}
 				elseif ($this->state->get('filter.state') == 2)
 				{
-					JToolbarHelper::unarchiveList('banners.publish');
+					JToolbarHelper::unarchiveList('ditems.publish');
 				}
 			}
 		}
 
 		if ($canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::checkin('banners.checkin');
+			JToolbarHelper::checkin('ditems.checkin');
 		}
 
 		if ($this->state->get('filter.state') == -2 && $canDo->get('core.delete'))
 		{
-			JToolbarHelper::deleteList('', 'banners.delete', 'JTOOLBAR_EMPTY_TRASH');
+			JToolbarHelper::deleteList('', 'ditems.delete', 'JTOOLBAR_EMPTY_TRASH');
 		}
 		elseif ($canDo->get('core.edit.state'))
 		{
-			JToolbarHelper::trash('banners.trash');
+			JToolbarHelper::trash('ditems.trash');
 		}
 
 		// Add a batch button
-		if ($user->authorise('core.create', 'com_banners') && $user->authorise('core.edit', 'com_banners') && $user->authorise('core.edit.state', 'com_banners'))
+		if ($user->authorise('core.create', 'com_ditems') && $user->authorise('core.edit', 'com_ditems') && $user->authorise('core.edit.state', 'com_ditems'))
 		{
 			JHtml::_('bootstrap.modal', 'collapseModal');
 			$title = JText::_('JTOOLBAR_BATCH');
@@ -138,11 +140,11 @@ class BannersViewBanners extends JViewLegacy
 
 		if ($canDo->get('core.admin'))
 		{
-			JToolbarHelper::preferences('com_banners');
+			JToolbarHelper::preferences('com_ditems');
 		}
-		JToolbarHelper::help('JHELP_COMPONENTS_BANNERS_BANNERS');
+		JToolbarHelper::help('JHELP_COMPONENTS_DITEMS_DITEMS');
 
-		JHtmlSidebar::setAction('index.php?option=com_banners&view=banners');
+		JHtmlSidebar::setAction('index.php?option=com_ditems&view=ditems');
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_PUBLISHED'),
@@ -151,15 +153,15 @@ class BannersViewBanners extends JViewLegacy
 		);
 
 		JHtmlSidebar::addFilter(
-			JText::_('COM_BANNERS_SELECT_CLIENT'),
-			'filter_client_id',
-			JHtml::_('select.options', BannersHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.client_id'))
+			JText::_('COM_DITEMS_SELECT_CLIENT'),
+			'filter_dname_id',
+			JHtml::_('select.options', DitemsHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.dname_id'))
 		);
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_CATEGORY'),
 			'filter_category_id',
-			JHtml::_('select.options', JHtml::_('category.options', 'com_banners'), 'value', 'text', $this->state->get('filter.category_id'))
+			JHtml::_('select.options', JHtml::_('category.options', 'com_ditems'), 'value', 'text', $this->state->get('filter.category_id'))
 		);
 
 		JHtmlSidebar::addFilter(
@@ -181,11 +183,11 @@ class BannersViewBanners extends JViewLegacy
 		return array(
 			'ordering' => JText::_('JGRID_HEADING_ORDERING'),
 			'a.state' => JText::_('JSTATUS'),
-			'a.name' => JText::_('COM_BANNERS_HEADING_NAME'),
-			'a.sticky' => JText::_('COM_BANNERS_HEADING_STICKY'),
-			'client_name' => JText::_('COM_BANNERS_HEADING_CLIENT'),
-			'impmade' => JText::_('COM_BANNERS_HEADING_IMPRESSIONS'),
-			'clicks' => JText::_('COM_BANNERS_HEADING_CLICKS'),
+			'a.name' => JText::_('COM_DITEMS_HEADING_NAME'),
+			'a.sticky' => JText::_('COM_DITEMS_HEADING_STICKY'),
+			'dname_name' => JText::_('COM_DITEMS_HEADING_CLIENT'),
+			'impmade' => JText::_('COM_DITEMS_HEADING_IMPRESSIONS'),
+			'clicks' => JText::_('COM_DITEMS_HEADING_CLICKS'),
 			'a.language' => JText::_('JGRID_HEADING_LANGUAGE'),
 			'a.id' => JText::_('JGRID_HEADING_ID')
 		);

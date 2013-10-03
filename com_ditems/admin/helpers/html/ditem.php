@@ -1,43 +1,44 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\helpers\ditem.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('JPATH_BASE') or die;
 
 /**
- * Banner HTML class.
+ * Ditem HTML class.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       2.5
+ * @subpackage  com_ditems
  */
-abstract class JHtmlBanner
+abstract class JHtmlDitem
 {
 	/**
-	 * Display a batch widget for the client selector.
+	 * Display a batch widget for the dname selector.
 	 *
 	 * @return  string  The necessary HTML for the widget.
 	 *
 	 * @since   2.5
 	 */
-	public static function clients()
+	public static function dnames()
 	{
 		JHtml::_('bootstrap.tooltip');
 
-		// Create the batch selector to change the client on a selection list.
+		// Create the batch selector to change the dname on a selection list.
 		$lines = array(
-			'<label id="batch-client-lbl" for="batch-client" class="hasTooltip" title="' . JHtml::tooltipText('COM_BANNERS_BATCH_CLIENT_LABEL', 'COM_BANNERS_BATCH_CLIENT_LABEL_DESC') . '">',
-			JText::_('COM_BANNERS_BATCH_CLIENT_LABEL'),
+			'<label id="batch-dname-lbl" for="batch-dname" class="hasTooltip" title="' . JHtml::tooltipText('COM_DITEMS_BATCH_DNAME_LABEL', 'COM_DITEMS_BATCH_DNAME_LABEL_DESC') . '">',
+			JText::_('COM_DITEMS_BATCH_DNAME_LABEL'),
 			'</label>',
-			'<select name="batch[client_id]" class="inputbox" id="batch-client-id">',
-			'<option value="">' . JText::_('COM_BANNERS_BATCH_CLIENT_NOCHANGE') . '</option>',
-			'<option value="0">' . JText::_('COM_BANNERS_NO_CLIENT') . '</option>',
-			JHtml::_('select.options', static::clientlist(), 'value', 'text'),
+			'<select name="batch[dname_id]" class="inputbox" id="batch-dname-id">',
+			'<option value="">' . JText::_('COM_DITEMS_BATCH_DNAME_NOCHANGE') . '</option>',
+			'<option value="0">' . JText::_('COM_DITEMS_NO_DNAME') . '</option>',
+			JHtml::_('select.options', static::dnamelist(), 'value', 'text'),
 			'</select>'
 		);
 
@@ -50,12 +51,12 @@ abstract class JHtmlBanner
 	 * @return  array  The field option objects.
 	 * @since   1.6
 	 */
-	public static function clientlist()
+	public static function dnamelist()
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select('id As value, name As text')
-			->from('#__banner_clients AS a')
+			->from('#__ditem_dnames AS a')
 			->order('a.name');
 
 		// Get the options.
@@ -92,25 +93,25 @@ abstract class JHtmlBanner
 		$states = array(
 			1 => array(
 				'sticky_unpublish',
-				'COM_BANNERS_BANNERS_PINNED',
-				'COM_BANNERS_BANNERS_HTML_PIN_BANNER',
-				'COM_BANNERS_BANNERS_PINNED',
+				'COM_DITEMS_DITEMS_PINNED',
+				'COM_DITEMS_DITEMS_HTML_PIN_DITEM',
+				'COM_DITEMS_DITEMS_PINNED',
 				true,
 				'publish',
 				'publish'
 			),
 			0 => array(
 				'sticky_publish',
-				'COM_BANNERS_BANNERS_UNPINNED',
-				'COM_BANNERS_BANNERS_HTML_UNPIN_BANNER',
-				'COM_BANNERS_BANNERS_UNPINNED',
+				'COM_DITEMS_DITEMS_UNPINNED',
+				'COM_DITEMS_DITEMS_HTML_UNPIN_DITEM',
+				'COM_DITEMS_DITEMS_UNPINNED',
 				true,
 				'unpublish',
 				'unpublish'
 			),
 		);
 
-		return JHtml::_('jgrid.state', $states, $value, $i, 'banners.', $enabled, true, $checkbox);
+		return JHtml::_('jgrid.state', $states, $value, $i, 'ditems.', $enabled, true, $checkbox);
 	}
 
 }

@@ -1,9 +1,11 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\dname\tmpl\edit.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,24 +15,24 @@ JHtml::addIncludePath(JPATH_COMPONENT.'/helpers/html');
 JHtml::_('behavior.formvalidation');
 JHtml::_('formbehavior.chosen', 'select');
 
-$canDo	= BannersHelper::getActions();
+$canDo	= DitemsHelper::getActions();
 ?>
 <script type="text/javascript">
 	Joomla.submitbutton = function(task)
 	{
-		if (task == 'client.cancel' || document.formvalidator.isValid(document.id('client-form')))
+		if (task == 'dname.cancel' || document.formvalidator.isValid(document.id('dname-form')))
 		{
-			Joomla.submitform(task, document.getElementById('client-form'));
+			Joomla.submitform(task, document.getElementById('dname-form'));
 		}
 	}
 </script>
 
-<form action="<?php echo JRoute::_('index.php?option=com_banners&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="client-form" class="form-validate form-horizontal">
+<form action="<?php echo JRoute::_('index.php?option=com_ditems&layout=edit&id='.(int) $this->item->id); ?>" method="post" name="adminForm" id="dname-form" class="form-validate form-horizontal">
 
 	<?php echo JLayoutHelper::render('joomla.edit.item_title', $this); ?>
 
 	<?php echo JHtml::_('bootstrap.startTabSet', 'myTab', array('active' => 'general')); ?>
-		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', empty($this->item->id) ? JText::_('COM_BANNERS_NEW_CLIENT', true) : JText::sprintf('COM_BANNERS_EDIT_CLIENT', $this->item->id, true)); ?>
+		<?php echo JHtml::_('bootstrap.addTab', 'myTab', 'general', empty($this->item->id) ? JText::_('COM_DITEMS_NEW_DNAME', true) : JText::sprintf('COM_DITEMS_EDIT_DNAME', $this->item->id, true)); ?>
 			<div class="row-fluid">
 				<div class="span6">
 					<?php if ($canDo->get('core.edit.state')) : ?>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="component" version="3.1" method="upgrade">
-	<name>com_banners</name>
+	<name>com_ditems</name>
 	<author>FalcoAccipiter</author>
 	<creationDate>October 2013</creationDate>
 	<copyright>(C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.

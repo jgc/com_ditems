@@ -1,9 +1,11 @@
 <?php
 /**
- * @package     Joomla.Administrator
- * @subpackage  com_banners
+  * @package     Joomla.Administrator
+ * @subpackage  com_ditems
+ * @file        admin\views\tracks\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,10 +15,10 @@ defined('_JEXEC') or die;
  * View class for a list of tracks.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersViewTracks extends JViewLegacy
+class DitemsViewTracks extends JViewLegacy
 {
 	protected $items;
 
@@ -40,10 +42,10 @@ class BannersViewTracks extends JViewLegacy
 			return false;
 		}
 
-		BannersHelper::addSubmenu('tracks');
+		DitemsHelper::addSubmenu('tracks');
 
 		$this->addToolbar();
-		require_once JPATH_COMPONENT .'/models/fields/bannerclient.php';
+		require_once JPATH_COMPONENT .'/models/fields/ditemdname.php';
 		$this->sidebar = JHtmlSidebar::render();
 		parent::display($tpl);
 	}
@@ -55,44 +57,44 @@ class BannersViewTracks extends JViewLegacy
 	 */
 	protected function addToolbar()
 	{
-		require_once JPATH_COMPONENT.'/helpers/banners.php';
+		require_once JPATH_COMPONENT.'/helpers/ditems.php';
 
-		$canDo	= BannersHelper::getActions($this->state->get('filter.category_id'));
+		$canDo	= DitemsHelper::getActions($this->state->get('filter.category_id'));
 
-		JToolbarHelper::title(JText::_('COM_BANNERS_MANAGER_TRACKS'), 'banners-tracks.png');
+		JToolbarHelper::title(JText::_('COM_DITEMS_MANAGER_TRACKS'), 'ditems-tracks.png');
 
 		$bar = JToolBar::getInstance('toolbar');
-		$bar->appendButton('Slider', 'export', 'JTOOLBAR_EXPORT', 'index.php?option=com_banners&amp;view=download&amp;tmpl=component', 600, 300);
+		$bar->appendButton('Slider', 'export', 'JTOOLBAR_EXPORT', 'index.php?option=com_ditems&amp;view=download&amp;tmpl=component', 600, 300);
 		if ($canDo->get('core.delete'))
 		{
-			$bar->appendButton('Confirm', 'COM_BANNERS_DELETE_MSG', 'delete', 'COM_BANNERS_TRACKS_DELETE', 'tracks.delete', false);
+			$bar->appendButton('Confirm', 'COM_DITEMS_DELETE_MSG', 'delete', 'COM_DITEMS_TRACKS_DELETE', 'tracks.delete', false);
 			JToolbarHelper::divider();
 		}
 		if ($canDo->get('core.admin'))
 		{
-			JToolbarHelper::preferences('com_banners');
+			JToolbarHelper::preferences('com_ditems');
 			JToolbarHelper::divider();
 		}
-		JToolbarHelper::help('JHELP_COMPONENTS_BANNERS_TRACKS');
+		JToolbarHelper::help('JHELP_COMPONENTS_DITEMS_TRACKS');
 
-		JHtmlSidebar::setAction('index.php?option=com_banners&view=tracks');
+		JHtmlSidebar::setAction('index.php?option=com_ditems&view=tracks');
 
 		JHtmlSidebar::addFilter(
-			JText::_('COM_BANNERS_SELECT_CLIENT'),
-			'filter_client_id',
-			JHtml::_('select.options', BannersHelper::getClientOptions(), 'value', 'text', $this->state->get('filter.client_id'))
+			JText::_('COM_DITEMS_SELECT_DNAME'),
+			'filter_dname_id',
+			JHtml::_('select.options', DitemsHelper::getDnameOptions(), 'value', 'text', $this->state->get('filter.dname_id'))
 		);
 
 		JHtmlSidebar::addFilter(
 			JText::_('JOPTION_SELECT_CATEGORY'),
 			'filter_category_id',
-			JHtml::_('select.options', JHtml::_('category.options', 'com_banners'), 'value', 'text', $this->state->get('filter.category_id'))
+			JHtml::_('select.options', JHtml::_('category.options', 'com_ditems'), 'value', 'text', $this->state->get('filter.category_id'))
 		);
 
 		JHtmlSidebar::addFilter(
-			JText::_('COM_BANNERS_SELECT_TYPE'),
+			JText::_('COM_DITEMS_SELECT_TYPE'),
 			'filter_type',
-			JHtml::_('select.options', array(JHtml::_('select.option', 1, JText::_('COM_BANNERS_IMPRESSION')), JHtml::_('select.option', 2, JText::_('COM_BANNERS_CLICK'))), 'value', 'text', $this->state->get('filter.type'))
+			JHtml::_('select.options', array(JHtml::_('select.option', 1, JText::_('COM_DITEMS_IMPRESSION')), JHtml::_('select.option', 2, JText::_('COM_DITEMS_CLICK'))), 'value', 'text', $this->state->get('filter.type'))
 		);
 	}
 
@@ -106,10 +108,10 @@ class BannersViewTracks extends JViewLegacy
 	protected function getSortFields()
 	{
 		return array(
-			'b.name' => JText::_('COM_BANNERS_HEADING_NAME'),
-			'cl.name' => JText::_('COM_BANNERS_HEADING_CLIENT'),
-			'track_type' => JText::_('COM_BANNERS_HEADING_TYPE'),
-			'count' => JText::_('COM_BANNERS_HEADING_COUNT'),
+			'b.name' => JText::_('COM_DITEMS_HEADING_NAME'),
+			'cl.name' => JText::_('COM_DITEMS_HEADING_DNAME'),
+			'track_type' => JText::_('COM_DITEMS_HEADING_TYPE'),
+			'count' => JText::_('COM_DITEMS_HEADING_COUNT'),
 			'track_date' => JText::_('JDATE')
 		);
 	}

@@ -1,35 +1,34 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\controllers\ditems.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banners list controller class.
+ * Ditems list controller class.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersControllerBanners extends JControllerAdmin
+class DitemsControllerDitems extends JControllerAdmin
 {
 	/**
-	 * @var		string	The prefix to use with controller messages.
-	 * @since   1.6
+	 * @var	string	The prefix to use with controller messages.
 	 */
-	protected $text_prefix = 'COM_BANNERS_BANNERS';
+	protected $text_prefix = 'COM_DITEMS_DITEMS';
 
 	/**
 	 * Constructor.
 	 *
 	 * @param   array An optional associative array of configuration settings.
 	 * @see     JController
-	 * @since   1.6
 	 */
 	public function __construct($config = array())
 	{
@@ -42,7 +41,7 @@ class BannersControllerBanners extends JControllerAdmin
 	 * Proxy for getModel.
 	 * @since   1.6
 	 */
-	public function getModel($name = 'Banner', $prefix = 'BannersModel', $config = array('ignore_request' => true))
+	public function getModel($name = 'Ditem', $prefix = 'DitemsModel', $config = array('ignore_request' => true))
 	{
 		$model = parent::getModel($name, $prefix, $config);
 		return $model;
@@ -63,7 +62,7 @@ class BannersControllerBanners extends JControllerAdmin
 
 		if (empty($ids))
 		{
-			JError::raiseWarning(500, JText::_('COM_BANNERS_NO_BANNERS_SELECTED'));
+			JError::raiseWarning(500, JText::_('COM_DITEMS_NO_DITEMS_SELECTED'));
 		}
 		else
 		{
@@ -77,14 +76,14 @@ class BannersControllerBanners extends JControllerAdmin
 			} else {
 				if ($value == 1)
 				{
-					$ntext = 'COM_BANNERS_N_BANNERS_STUCK';
+					$ntext = 'COM_DITEMS_N_DITEMS_STUCK';
 				} else {
-					$ntext = 'COM_BANNERS_N_BANNERS_UNSTUCK';
+					$ntext = 'COM_DITEMS_N_DITEMS_UNSTUCK';
 				}
 				$this->setMessage(JText::plural($ntext, count($ids)));
 			}
 		}
 
-		$this->setRedirect('index.php?option=com_banners&view=banners');
+		$this->setRedirect('index.php?option=com_ditems&view=ditems');
 	}
 }

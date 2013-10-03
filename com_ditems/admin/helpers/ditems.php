@@ -1,22 +1,23 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\helpers\ditems.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Banners component helper.
+ * Ditems component helper.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.6
+ * @subpackage  com_ditems
  */
-class BannersHelper
+class DitemsHelper
 {
 	/**
 	 * Configure the Linkbar.
@@ -29,32 +30,32 @@ class BannersHelper
 	public static function addSubmenu($vName)
 	{
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BANNERS_SUBMENU_BANNERS'),
-			'index.php?option=com_banners&view=banners',
-			$vName == 'banners'
+			JText::_('COM_DITEMS_SUBMENU_DITEMS'),
+			'index.php?option=com_ditems&view=ditems',
+			$vName == 'ditems'
 		);
 
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BANNERS_SUBMENU_CATEGORIES'),
-			'index.php?option=com_categories&extension=com_banners',
+			JText::_('COM_DITEMS_SUBMENU_CATEGORIES'),
+			'index.php?option=com_categories&extension=com_ditems',
 			$vName == 'categories'
 		);
 		if ($vName == 'categories')
 		{
 			JToolbarHelper::title(
-				JText::sprintf('COM_CATEGORIES_CATEGORIES_TITLE', JText::_('com_banners')),
-				'banners-categories');
+				JText::sprintf('COM_CATEGORIES_CATEGORIES_TITLE', JText::_('com_ditems')),
+				'ditems-categories');
 		}
 
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BANNERS_SUBMENU_CLIENTS'),
-			'index.php?option=com_banners&view=clients',
-			$vName == 'clients'
+			JText::_('COM_DITEMS_SUBMENU_DNAMES'),
+			'index.php?option=com_ditems&view=dnames',
+			$vName == 'dnames'
 		);
 
 		JHtmlSidebar::addEntry(
-			JText::_('COM_BANNERS_SUBMENU_TRACKS'),
-			'index.php?option=com_banners&view=tracks',
+			JText::_('COM_DITEMS_SUBMENU_TRACKS'),
+			'index.php?option=com_ditems&view=tracks',
 			$vName == 'tracks'
 		);
 	}
@@ -74,16 +75,16 @@ class BannersHelper
 
 		if (empty($categoryId))
 		{
-			$assetName = 'com_banners';
+			$assetName = 'com_ditems';
 			$level = 'component';
 		}
 		else
 		{
-			$assetName = 'com_banners.category.'.(int) $categoryId;
+			$assetName = 'com_ditems.category.'.(int) $categoryId;
 			$level = 'category';
 		}
 
-		$actions = JAccess::getActions('com_banners', $level);
+		$actions = JAccess::getActions('com_ditems', $level);
 
 		foreach ($actions as $action)
 		{
@@ -105,7 +106,7 @@ class BannersHelper
 		$now = JFactory::getDate();
 		$query = $db->getQuery(true)
 			->select('*')
-			->from('#__banners')
+			->from('#__ditems')
 			->where($db->quote($now) . ' >= ' . $db->quote('reset'))
 			->where($db->quoteName('reset') . ' != ' . $db->quote($nullDate) . ' AND ' . $db->quoteName('reset') . '!=NULL')
 			->where('(' . $db->quoteName('checked_out') . ' = 0 OR ' . $db->quoteName('checked_out') . ' = ' . (int) $db->quote($user->id) . ')');
@@ -129,14 +130,14 @@ class BannersHelper
 
 			if ($purchase_type < 0 && $row->cid)
 			{
-				$client = JTable::getInstance('Client', 'BannersTable');
-				$client->load($row->cid);
-				$purchase_type = $client->purchase_type;
+				$dname = JTable::getInstance('Client', 'DitemsTable');
+				$dname->load($row->cid);
+				$purchase_type = $dname->purchase_type;
 			}
 
 			if ($purchase_type < 0)
 			{
-				$params = JComponentHelper::getParams('com_banners');
+				$params = JComponentHelper::getParams('com_ditems');
 				$purchase_type = $params->get('purchase_type');
 			}
 
@@ -165,7 +166,7 @@ class BannersHelper
 
 			// Update the row ordering field.
 			$query->clear()
-				->update($db->quoteName('#__banners'))
+				->update($db->quoteName('#__ditems'))
 				->set($db->quoteName('reset') . ' = ' . $db->quote($reset))
 				->set($db->quoteName('impmade') . ' = ' . $db->quote(0))
 				->set($db->quoteName('clicks') . ' = ' . $db->quote(0))
@@ -193,7 +194,7 @@ class BannersHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true)
 			->select('id As value, name As text')
-			->from('#__banner_clients AS a')
+			->from('#__ditem_dnames AS a')
 			->order('a.name');
 
 		// Get the options.
@@ -211,7 +212,7 @@ class BannersHelper
 		// Merge any additional options in the XML definition.
 		//$options = array_merge(parent::getOptions(), $options);
 
-		array_unshift($options, JHtml::_('select.option', '0', JText::_('COM_BANNERS_NO_CLIENT')));
+		array_unshift($options, JHtml::_('select.option', '0', JText::_('COM_DITEMS_NO_DNAME')));
 
 		return $options;
 	}

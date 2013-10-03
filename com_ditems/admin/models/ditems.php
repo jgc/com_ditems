@@ -1,22 +1,24 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\models\ditems.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Methods supporting a list of banner records.
+ * Methods supporting a list of ditem records.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
  * @since       1.6
  */
-class BannersModelBanners extends JModelList
+class DitemsModelDitems extends JModelList
 {
 	/**
 	 * Constructor.
@@ -31,7 +33,7 @@ class BannersModelBanners extends JModelList
 		{
 			$config['filter_fields'] = array(
 				'id', 'a.id',
-				'cid', 'a.cid', 'client_name',
+				'cid', 'a.cid', 'dname_name',
 				'name', 'a.name',
 				'alias', 'a.alias',
 				'state', 'a.state',
@@ -66,7 +68,7 @@ class BannersModelBanners extends JModelList
 			$query = $db->getQuery(true)
 				->select('MAX(ordering) as ' . $db->quoteName('max') . ', catid')
 				->select('catid')
-				->from('#__banners')
+				->from('#__ditems')
 				->group('catid');
 			$db->setQuery($query);
 			$this->cache['categoryorders'] = $db->loadAssocList('catid', 0);
@@ -99,7 +101,7 @@ class BannersModelBanners extends JModelList
 					'a.language, a.publish_up, a.publish_down'
 			)
 		);
-		$query->from($db->quoteName('#__banners') . ' AS a');
+		$query->from($db->quoteName('#__ditems') . ' AS a');
 
 		// Join over the language
 		$query->select('l.title AS language_title')
@@ -113,9 +115,9 @@ class BannersModelBanners extends JModelList
 		$query->select('c.title AS category_title')
 			->join('LEFT', '#__categories AS c ON c.id = a.catid');
 
-		// Join over the clients.
-		$query->select('cl.name AS client_name,cl.purchase_type as client_purchase_type')
-			->join('LEFT', '#__banner_clients AS cl ON cl.id = a.cid');
+		// Join over the dnames.
+		$query->select('cl.name AS dname_name,cl.purchase_type as dname_purchase_type')
+			->join('LEFT', '#__ditem_dnames AS cl ON cl.id = a.cid');
 
 		// Filter by published state
 		$published = $this->getState('filter.state');
@@ -135,11 +137,11 @@ class BannersModelBanners extends JModelList
 			$query->where('a.catid = ' . (int) $categoryId);
 		}
 
-		// Filter by client.
-		$clientId = $this->getState('filter.client_id');
-		if (is_numeric($clientId))
+		// Filter by dname.
+		$dnameId = $this->getState('filter.dname_id');
+		if (is_numeric($dnameId))
 		{
-			$query->where('a.cid = ' . (int) $clientId);
+			$query->where('a.cid = ' . (int) $dnameId);
 		}
 
 		// Filter by search in title
@@ -170,7 +172,7 @@ class BannersModelBanners extends JModelList
 		{
 			$orderCol = 'c.title ' . $orderDirn . ', a.ordering';
 		}
-		if ($orderCol == 'client_name')
+		if ($orderCol == 'dname_name')
 		{
 			$orderCol = 'cl.name';
 		}
@@ -212,7 +214,7 @@ class BannersModelBanners extends JModelList
 	 * @return  JTable    A database object
 	 * @since   1.6
 	 */
-	public function getTable($type = 'Banner', $prefix = 'BannersTable', $config = array())
+	public function getTable($type = 'Ditem', $prefix = 'DitemsTable', $config = array())
 	{
 		return JTable::getInstance($type, $prefix, $config);
 	}
@@ -236,14 +238,14 @@ class BannersModelBanners extends JModelList
 		$categoryId = $this->getUserStateFromRequest($this->context . '.filter.category_id', 'filter_category_id', '');
 		$this->setState('filter.category_id', $categoryId);
 
-		$clientId = $this->getUserStateFromRequest($this->context . '.filter.client_id', 'filter_client_id', '');
-		$this->setState('filter.client_id', $clientId);
+		$dnameId = $this->getUserStateFromRequest($this->context . '.filter.dname_id', 'filter_dname_id', '');
+		$this->setState('filter.dname_id', $dnameId);
 
 		$language = $this->getUserStateFromRequest($this->context . '.filter.language', 'filter_language', '');
 		$this->setState('filter.language', $language);
 
 		// Load the parameters.
-		$params = JComponentHelper::getParams('com_banners');
+		$params = JComponentHelper::getParams('com_ditems');
 		$this->setState('params', $params);
 
 		// List state information.

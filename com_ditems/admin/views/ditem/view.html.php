@@ -1,24 +1,25 @@
 <?php
 /**
  * @package     Joomla.Administrator
- * @subpackage  com_banners
+ * @subpackage  com_ditems
+ * @file        admin\views\ditem\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
-JLoader::register('BannersHelper', JPATH_COMPONENT.'/helpers/banners.php');
+JLoader::register('DitemsHelper', JPATH_COMPONENT.'/helpers/ditems.php');
 
 /**
- * View to edit a banner.
+ * View to edit a ditem.
  *
  * @package     Joomla.Administrator
- * @subpackage  com_banners
- * @since       1.5
+ * @subpackage  com_ditems
  */
-class BannersViewBanner extends JViewLegacy
+class DitemsViewDitem extends JViewLegacy
 {
 	protected $form;
 
@@ -61,38 +62,38 @@ class BannersViewBanner extends JViewLegacy
 		$isNew		= ($this->item->id == 0);
 		$checkedOut	= !($this->item->checked_out == 0 || $this->item->checked_out == $userId);
 		// Since we don't track these assets at the item level, use the category id.
-		$canDo		= BannersHelper::getActions($this->item->catid, 0);
+		$canDo		= DitemsHelper::getActions($this->item->catid, 0);
 
-		JToolbarHelper::title($isNew ? JText::_('COM_BANNERS_MANAGER_BANNER_NEW') : JText::_('COM_BANNERS_MANAGER_BANNER_EDIT'), 'banners.png');
+		JToolbarHelper::title($isNew ? JText::_('COM_DITEMS_MANAGER_DITEM_NEW') : JText::_('COM_DITEMS_MANAGER_DITEM_EDIT'), 'ditems.png');
 
 		// If not checked out, can save the item.
-		if (!$checkedOut && ($canDo->get('core.edit') || count($user->getAuthorisedCategories('com_banners', 'core.create')) > 0))
+		if (!$checkedOut && ($canDo->get('core.edit') || count($user->getAuthorisedCategories('com_ditems', 'core.create')) > 0))
 		{
-			JToolbarHelper::apply('banner.apply');
-			JToolbarHelper::save('banner.save');
+			JToolbarHelper::apply('ditem.apply');
+			JToolbarHelper::save('ditem.save');
 
 			if ($canDo->get('core.create'))
 			{
-				JToolbarHelper::save2new('banner.save2new');
+				JToolbarHelper::save2new('ditem.save2new');
 			}
 		}
 
 		// If an existing item, can save to a copy.
 		if (!$isNew && $canDo->get('core.create'))
 		{
-			JToolbarHelper::save2copy('banner.save2copy');
+			JToolbarHelper::save2copy('ditem.save2copy');
 		}
 
 		if (empty($this->item->id))
 		{
-			JToolbarHelper::cancel('banner.cancel');
+			JToolbarHelper::cancel('ditem.cancel');
 		}
 		else
 		{
-			JToolbarHelper::cancel('banner.cancel', 'JTOOLBAR_CLOSE');
+			JToolbarHelper::cancel('ditem.cancel', 'JTOOLBAR_CLOSE');
 		}
 
 		JToolbarHelper::divider();
-		JToolbarHelper::help('JHELP_COMPONENTS_BANNERS_BANNERS_EDIT');
+		JToolbarHelper::help('JHELP_COMPONENTS_DITEMS_DITEMS_EDIT');
 	}
 }
