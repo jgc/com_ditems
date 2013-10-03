@@ -130,7 +130,7 @@ class DitemsHelper
 
 			if ($purchase_type < 0 && $row->cid)
 			{
-				$dname = JTable::getInstance('Client', 'DitemsTable');
+				$dname = JTable::getInstance('Dname', 'DitemsTable');
 				$dname->load($row->cid);
 				$purchase_type = $dname->purchase_type;
 			}
@@ -187,7 +187,7 @@ class DitemsHelper
 		return true;
 	}
 
-	public static function getClientOptions()
+	public static function getDnameOptions()
 	{
 		$options = array();
 
