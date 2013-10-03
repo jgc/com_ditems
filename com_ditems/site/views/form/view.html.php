@@ -1,22 +1,23 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_trainingforms
+ * @subpackage  com_ditems
+ * @file        site\views\form\view.html.php
+ * @version	3.1.5
  *
- * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
+ * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * HTML Article View class for the trainingforms component
+ * HTML Article View class for the ditems component
  *
  * @package     Joomla.Site
- * @subpackage  com_trainingforms
- * @since       1.5
+ * @subpackage  com_ditems
  */
-class trainingformsViewForm extends JViewLegacy
+class ditemsViewForm extends JViewLegacy
 {
 	protected $form;
 
@@ -28,7 +29,7 @@ class trainingformsViewForm extends JViewLegacy
 
 	public function display($tpl = null)
 	{
-		$user		= JFactory::getUser();
+		$user = JFactory::getUser();
 
 		// Get model data.
 		$this->state		= $this->get('State');
@@ -38,12 +39,12 @@ class trainingformsViewForm extends JViewLegacy
 
 		if (empty($this->item->id))
 		{
-			$authorised = ($user->authorise('core.create', 'com_trainingforms') || (count($user->getAuthorisedCategories('com_trainingforms', 'core.create'))));
+			$authorised = ($user->authorise('core.create', 'com_ditems') || (count($user->getAuthorisedCategories('com_ditems', 'core.create'))));
 		}
 		else
 		{
 			// jc edit
-			// $authorised = $user->authorise('core.edit', 'com_trainingforms.category.'.$this->item->catid);
+			// $authorised = $user->authorise('core.edit', 'com_ditems.category.'.$this->item->catid);
 			if ($user == $this->item->modified_bt) {
 				$authorised = true;
 			}
@@ -96,11 +97,11 @@ class trainingformsViewForm extends JViewLegacy
 
 		if (empty($this->item->id))
 	{
-		$head = JText::_('COM_TRAININGFORMS_FORM_SUBMIT_TRAININGFORM');
+		$head = JText::_('COM_DITEMS_FORM_SUBMIT_DITEM');
 		}
 		else
 		{
-		$head = JText::_('COM_TRAININGFORMS_FORM_EDIT_TRAININGFORM');
+		$head = JText::_('COM_DITEMS_FORM_EDIT_DITEM');
 		}
 
 		if ($menu)
