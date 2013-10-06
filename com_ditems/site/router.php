@@ -1,7 +1,7 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_ditens
+ * @subpackage  com_ditems
  *
  * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
@@ -10,7 +10,7 @@
 defined('_JEXEC') or die;
 
 /**
- * Build the route for the com_ditens component
+ * Build the route for the com_ditems component
  *
  * @return  array  An array of URL arguments
  *
@@ -55,7 +55,7 @@ function ditemsBuildRoute(&$query)
 		}
 	}
 
-	// are we dealing with an diten that is attached to a menu item?
+	// are we dealing with an ditem that is attached to a menu item?
 	if (isset($query['view']) && ($mView == $query['view']) and (isset($query['id'])) and ($mId == (int) $query['id']))
 	{
 		unset($query['view']);
@@ -65,11 +65,11 @@ function ditemsBuildRoute(&$query)
 		return $segments;
 	}
 
-	if (isset($view) and ($view == 'category' or $view == 'diten'))
+	if (isset($view) and ($view == 'category' or $view == 'ditem'))
 	{
 		if ($mId != (int) $query['id'] || $mView != $view)
 		{
-			if ($view == 'diten' && isset($query['catid']))
+			if ($view == 'ditem' && isset($query['catid']))
 			{
 				$catid = $query['catid'];
 			}
@@ -161,13 +161,13 @@ function ditemsParseRoute($segments)
 	$app = JFactory::getApplication();
 	$menu = $app->getMenu();
 	$item = $menu->getActive();
-	$params = JComponentHelper::getParams('com_ditens');
+	$params = JComponentHelper::getParams('com_ditems');
 	$advanced = $params->get('sef_advanced_link', 0);
 
 	// Count route segments
 	$count = count($segments);
 
-	// Standard routing for ditens.
+	// Standard routing for ditems.
 	if (!isset($item))
 	{
 		$vars['view'] = $segments[0];

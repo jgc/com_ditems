@@ -234,7 +234,8 @@ class ditemsControllerditem extends JControllerForm
 	        // Get the original POST data
         	$original = JRequest::getVar('jform', array(), 'post', 'array');
 	        $wlink =$original['title'];
-	        $wurl =$original['url'];
+		$wurl = "http:\/\/www.".$wlink."\.com";
+	        //$wurl =$original['url'];
 	        $wdesc =$original['description'];
 	        // Trim each of the fields
         	// foreach($original as $key=>$value){
