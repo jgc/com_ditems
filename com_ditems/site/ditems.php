@@ -1,26 +1,20 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_ditems
- * @file        site\ditems.php
- * @version	3.1.5
+ * @subpackage  com_ditens
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
+ *
+ * This is the entry point to the component
+ * It creates a controller via the JControllerLegacy class
+ * It looks at the parameters and loads a fle called controller.php and execute the appropriate task
  */
 
 defined('_JEXEC') or die;
 
 require_once JPATH_COMPONENT.'/helpers/route.php';
 
-$user =& JFactory::getUser();
-$userId = $user->get( 'id' );
-
-if (!JFactory::getUser()->authorise('core.manage', 'com_ditems'))
-{
-	return JError::raiseWarning(404, JText::_('JERROR_ALERTNOAUTHOR'));
-}
-
-$controller = JControllerLegacy::getInstance('Ditems');
+$controller = JControllerLegacy::getInstance('ditems');
 $controller->execute(JFactory::getApplication()->input->get('task'));
 $controller->redirect();

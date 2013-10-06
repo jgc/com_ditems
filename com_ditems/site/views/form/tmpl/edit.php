@@ -2,10 +2,8 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_ditems
- * @file        site\views\tmpl\edit.php
- * @version	3.1.5
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -52,10 +50,10 @@ $params = $this->state->get('params');
 		<hr class="hr-condensed" />
 		<div class="control-group">
 			<div class="control-label">
-				<?php echo $this->form->getLabel('title'); ?>
+				<?php echo $this->form->getLabel('name'); ?>
 			</div>
 			<div class="controls">
-				<?php echo $this->form->getInput('title'); ?>
+				<?php echo $this->form->getInput('name'); ?>
 			</div>
 		</div>
 		<div class="control-group">
@@ -74,41 +72,7 @@ $params = $this->state->get('params');
 				<?php echo $this->form->getInput('catid'); ?>
 			</div>
 		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('url'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('url'); ?>
-			</div>
-		</div>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('tags'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('tags'); ?>
-			</div>
-		</div>
-
-		<?php if ($this->user->authorise('core.edit.state', 'com_ditems.ditem')) : ?>
-			<div class="control-group">
-				<div class="control-label">
-					<?php echo $this->form->getLabel('state'); ?>
-				</div>
-				<div class="controls">
-					<?php echo $this->form->getInput('state'); ?>
-				</div>
-			</div>
-		<?php endif; ?>
-		<div class="control-group">
-			<div class="control-label">
-				<?php echo $this->form->getLabel('language'); ?>
-			</div>
-			<div class="controls">
-				<?php echo $this->form->getInput('language'); ?>
-			</div>
-		</div>
+		
 		<div class="control-group">
 			<div class="control-label">
 				<?php echo $this->form->getLabel('description'); ?>

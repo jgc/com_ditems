@@ -1,34 +1,65 @@
 <?php
 /**
  * @package     Joomla.Site
- * @subpackage  com_ditems
- * @file        site\controller.php
- * @version	3.1.5
+ * @subpackage  com_ditens
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
 defined('_JEXEC') or die;
 
 /**
- * Ditems Controller
+ * ditens Component Controller
  *
  * @package     Joomla.Site
- * @subpackage  com_ditems
+ * @subpackage  com_ditens
+ * @since       1.5
  */
-class DitemsController extends JControllerLegacy
+class ditensController extends JControllerLegacy
 {
-	public function click()
+	/**
+	 * Method to display a view.
+	 *
+	 * @param   boolean			If true, the view output will be cached
+	 * @param   array  An array of safe url parameters and their variable types, for valid values see {@link JFilterInput::clean()}.
+	 *
+	 * @return  JController		This object to support chaining.
+	 * @since   1.5
+	 */
+	public function display($cachable = false, $urlparams = false)
 	{
-		$id = $this->input->getInt('id', 0);
+		$cachable	= true;	// Huh? Why not just put that in the constructor?
+		$user		= JFactory::getUser();
 
-		if ($id)
+		// Set the default view name and format from the Request.
+		// Note we are using w_id to avoid collisions with the router and the return page.
+		// Frontend is a bit messier than the backend.
+		$id    = $this->input->getInt('w_id');
+		$vName = $this->input->get('view', 'categories');
+		$this->input->set('view', $vName);
+
+		if ($user->get('id') ||($this->input->getMethod() == 'POST' && $vName = 'categories'))
 		{
-			$model = $this->getModel('Ditem', 'DitemsModel', array('ignore_request' => true));
-			$model->setState('ditem.id', $id);
-			$model->click();
-			$this->setRedirect($model->getUrl());
+			$cachable = false;
 		}
+
+		$safeurlparams = array(
+			'id'				=> 'INT',
+			'limit'				=> 'UINT',
+			'limitstart'		=> 'UINT',
+			'filter_order'		=> 'CMD',
+			'filter_order_Dir'	=> 'CMD',
+			'lang'				=> 'CMD'
+		);
+
+		// Check for edit form.
+		if ($vName == 'form' && !$this->checkEditId('com_ditens.edit.diten', $id))
+		{
+			// Somehow the person just went to the form - we don't allow that.
+			return JError::raiseError(403, JText::sprintf('JLIB_APPLICATION_ERROR_UNHELD_ID', $id));
+		}
+
+		return parent::display($cachable, $safeurlparams);
 	}
 }

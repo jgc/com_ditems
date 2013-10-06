@@ -2,10 +2,8 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_ditems
- * @file        site\controllers\ditem.php
- * @version	3.1.5
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -13,10 +11,10 @@ defined('_JEXEC') or die;
 
 /**
  * @package     Joomla.Site
- * @subpackage  com_ditemss
+ * @subpackage  com_ditems
  * @since       1.5
  */
-class ditemssControllerditem extends JControllerForm
+class ditemsControllerditem extends JControllerForm
 {
 	/**
 	 * @since   1.6
@@ -269,7 +267,7 @@ class ditemssControllerditem extends JControllerForm
 	}
 
 	/**
-	 * Go to a trainingform
+	 * Go to a ditem
 	 *
 	 * @return  void
 	 * @since   1.6
@@ -289,7 +287,7 @@ class ditemssControllerditem extends JControllerForm
 		// Make sure the item was found.
 		if (empty($link))
 		{
-			return JError::raiseWarning(404, JText::_('COM_DITEMSS_ERROR_DITEM_NOT_FOUND'));
+			return JError::raiseWarning(404, JText::_('COM_DITEMS_ERROR_DITEM_NOT_FOUND'));
 		}
 
 		// Check whether item access level allows access.

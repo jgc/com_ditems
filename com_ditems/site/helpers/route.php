@@ -2,10 +2,8 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_ditems
- * @file        site\helpers\route.php
- * @version	3.1.5
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -17,6 +15,7 @@ defined('_JEXEC') or die;
  * @static
  * @package     Joomla.Site
  * @subpackage  com_ditems
+ * @since       1.5
  */
 abstract class ditemsHelperRoute
 {

@@ -2,21 +2,18 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_ditems
- * @file        site\views\ditem.php
- * @version	3.1.5
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
- */
  */
 
 defined('_JEXEC') or die;
 
 /**
- * HTML View class for the trainingforms component
+ * HTML View class for the ditems component
  *
  * @package     Joomla.Site
- * @subpackage  com_trainingforms
+ * @subpackage  com_ditems
  * @since       1.5
  */
 class ditemsViewditem extends JViewLegacy
@@ -28,7 +25,7 @@ class ditemsViewditem extends JViewLegacy
 	public function display($tpl = null)
 	{
 		// Get some data from the models
-		$item = $this->get('Item');
+		$item		= $this->get('Item');
 
 		if ($this->getLayout() == 'edit')
 		{
@@ -44,7 +41,7 @@ class ditemsViewditem extends JViewLegacy
 		else
 		{
 			//TODO create proper error handling
-			JFactory::getApplication()->redirect(JRoute::_('index.php'), JText::_('COM_DITEMSS_ERROR_DITEM_NOT_FOUND'), 'notice');
+			JFactory::getApplication()->redirect(JRoute::_('index.php'), JText::_('COM_DITEMS_ERROR_DITEM_NOT_FOUND'), 'notice');
 		}
 	}
 }

@@ -10,52 +10,30 @@
 defined('_JEXEC') or die;
 
 /**
- * HTML Article View class for the ditems component
+ * Content categories view.
  *
  * @package     Joomla.Site
  * @subpackage  com_ditems
  * @since       1.5
  */
-class ditemsViewForm extends JViewLegacy
+class ditemsViewCategories extends JViewLegacy
 {
-	protected $form;
+	protected $state = null;
 
-	protected $item;
+	protected $item = null;
 
-	protected $return_page;
+	protected $items = null;
 
-	protected $state;
-
+	/**
+	 * Display the view
+	 *
+	 * @return  mixed  False on error, null otherwise.
+	 */
 	public function display($tpl = null)
 	{
-		$user		= JFactory::getUser();
-
-		// Get model data.
-		$this->state		= $this->get('State');
-		$this->item		= $this->get('Item');
-		$this->form		= $this->get('Form');
-		$this->return_page	= $this->get('ReturnPage');
-
-		if (empty($this->item->id))
-		{
-			$authorised = ($user->authorise('core.create', 'com_ditems') || (count($user->getAuthorisedCategories('com_ditems', 'core.create'))));
-		}
-		else
-		{
-			$authorised = $user->authorise('core.edit', 'com_ditems.category.'.$this->item->catid);
-
-		}
-
-		if ($authorised !== true)
-		{
-			JError::raiseError(403, JText::_('JERROR_ALERTNOAUTHOR'));
-			return false;
-		}
-
-		if (!empty($this->item))
-		{
-			$this->form->bind($this->item);
-		}
+		$state		= $this->get('State');
+		$items		= $this->get('Items');
+		$parent		= $this->get('Parent');
 
 		// Check for errors.
 		if (count($errors = $this->get('Errors')))
@@ -64,16 +42,30 @@ class ditemsViewForm extends JViewLegacy
 			return false;
 		}
 
-		// Create a shortcut to the parameters.
-		$params	= &$this->state->params;
+		if ($items === false)
+		{
+			return JError::raiseError(404, JText::_('JGLOBAL_CATEGORY_NOT_FOUND'));
+		}
+
+		if ($parent == false)
+		{
+			return JError::raiseError(404, JText::_('JGLOBAL_CATEGORY_NOT_FOUND'));
+		}
+
+		$params = &$state->params;
+
+		$items = array($parent->id => $items);
 
 		//Escape strings for HTML output
 		$this->pageclass_sfx = htmlspecialchars($params->get('pageclass_sfx'));
 
-		$this->params	= $params;
-		$this->user		= $user;
+		$this->maxLevelcat = $params->get('maxLevelcat', -1);
+		$this->params = &$params;
+		$this->parent = &$parent;
+		$this->items  = &$items;
 
 		$this->_prepareDocument();
+
 		parent::display($tpl);
 	}
 
@@ -89,27 +81,20 @@ class ditemsViewForm extends JViewLegacy
 		// Because the application sets a default page title,
 		// we need to get it from the menu item itself
 		$menu = $menus->getActive();
-
-		if (empty($this->item->id))
-	{
-		$head = JText::_('COM_TRAININGFORMS_FORM_SUBMIT_TRAININGFORM');
-		}
-		else
-		{
-		$head = JText::_('COM_TRAININGFORMS_FORM_EDIT_TRAININGFORM');
-		}
-
 		if ($menu)
 		{
 			$this->params->def('page_heading', $this->params->get('page_title', $menu->title));
 		}
 		else
 		{
-			$this->params->def('page_heading', $head);
+			$this->params->def('page_heading', JText::_('COM_DITEMS_DEFAULT_PAGE_TITLE'));
 		}
-
-		$title = $this->params->def('page_title', $head);
-		if ($app->getCfg('sitename_pagetitles', 0) == 1)
+		$title = $this->params->get('page_title', '');
+		if (empty($title))
+		{
+			$title = $app->getCfg('sitename');
+		}
+		elseif ($app->getCfg('sitename_pagetitles', 0) == 1)
 		{
 			$title = JText::sprintf('JPAGETITLE', $app->getCfg('sitename'), $title);
 		}
@@ -129,7 +114,7 @@ class ditemsViewForm extends JViewLegacy
 			$this->document->setMetadata('keywords', $this->params->get('menu-meta_keywords'));
 		}
 
-			if ($this->params->get('robots'))
+		if ($this->params->get('robots'))
 		{
 			$this->document->setMetadata('robots', $this->params->get('robots'));
 		}

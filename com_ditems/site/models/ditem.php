@@ -2,10 +2,8 @@
 /**
  * @package     Joomla.Site
  * @subpackage  com_ditems
- * @file        site/models/ditem.php
- * @version	3.1.5
  *
- * @copyright   (C) 2013 FalcoAccipiter / bloggundog.com. All rights reserved.
+ * @copyright   Copyright (C) 2005 - 2013 Open Source Matters, Inc. All rights reserved.
  * @license     GNU General Public License version 2 or later; see LICENSE.txt
  */
 
@@ -14,168 +12,82 @@ defined('_JEXEC') or die;
 JTable::addIncludePath(JPATH_COMPONENT_ADMINISTRATOR . '/tables');
 
 /**
- * Ditem model for the Joomla Ditems component.
+ * ditems Component Model for a ditem record
  *
  * @package     Joomla.Site
  * @subpackage  com_ditems
  * @since       1.5
  */
-class DitemsModelDitem extends JModelLegacy
+class ditemsModelditem extends JModelItem
 {
-	protected $_item;
+	/**
+	 * Model context string.
+	 *
+	 * @access	protected
+	 * @var		string
+	 */
+	protected $_context = 'com_ditems.ditem';
 
 	/**
-	 * Clicks the URL, incrementing the counter
+	 * Method to auto-populate the model state.
 	 *
-	 * @return  void
+	 * Note. Calling getState in this method will result in recursion.
 	 *
-	 * @since   1.5
+	 * @since   1.6
 	 */
-	public function click()
+	protected function populateState()
 	{
-		$id = $this->getState('ditem.id');
+		$app = JFactory::getApplication();
+		$params	= $app->getParams();
 
-		// update click count
-		$db = $this->getDbo();
-		$query = $db->getQuery(true)
-			->update('#__ditems')
-			->set('clicks = (clicks + 1)')
-			->where('id = ' . (int) $id);
+		// Load the object state.
+		$id	= $app->input->getInt('id');
+		$this->setState('ditem.id', $id);
 
-		$db->setQuery($query);
-
-		try
-		{
-			$db->execute();
-		}
-		catch (RuntimeException $e)
-		{
-			JError::raiseError(500, $e->getMessage());
-		}
-
-		// track clicks
-
-		$item = $this->getItem();
-
-		$trackClicks = $item->track_clicks;
-
-		if ($trackClicks < 0 && $item->cid)
-		{
-			$trackClicks = $item->dname_track_clicks;
-		}
-
-		if ($trackClicks < 0)
-		{
-			$config = JComponentHelper::getParams('com_ditems');
-			$trackClicks = $config->get('track_clicks');
-		}
-
-		if ($trackClicks > 0)
-		{
-			$trackDate = JFactory::getDate()->format('Y-m-d H');
-
-			$query->clear()
-				->select($db->quoteName('count'))
-				->from('#__ditem_tracks')
-				->where('track_type=2')
-				->where('ditem_id=' . (int) $id)
-				->where('track_date=' . $db->quote($trackDate));
-
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				JError::raiseError(500, $e->getMessage());
-			}
-
-			$count = $db->loadResult();
-
-			$query->clear();
-
-			if ($count)
-			{
-				// update count
-				$query->update('#__ditem_tracks')
-					->set($db->quoteName('count') . ' = (' . $db->quote('count') . ' + 1)')
-					->where('track_type=2')
-					->where('ditem_id=' . (int) $id)
-					->where('track_date=' . $db->quote($trackDate));
-			}
-			else
-			{
-				// insert new count
-				//sqlsrv change
-				$query->insert('#__ditem_tracks')
-					->columns(
-						array(
-							$db->quoteName('count'), $db->quoteName('track_type'),
-							$db->quoteName('ditem_id'), $db->quoteName('track_date')
-						)
-					)
-					->values('1, 2,' . (int) $id . ',' . $db->quote($trackDate));
-			}
-
-			$db->setQuery($query);
-
-			try
-			{
-				$db->execute();
-			}
-			catch (RuntimeException $e)
-			{
-				JError::raiseError(500, $e->getMessage());
-			}
-		}
+		// Load the parameters.
+		$this->setState('params', $params);
 	}
 
 	/**
-	 * Get the data for a ditem.
+	 * Method to get an object.
 	 *
-	 * @return  object
+	 * @param   integer	The id of the object to get.
+	 *
+	 * @return  mixed  Object on success, false on failure.
 	 */
-	public function &getItem()
+	public function getItem($id = null)
 	{
-		if (!isset($this->_item))
+		if ($this->_item === null)
 		{
-			$cache = JFactory::getCache('com_ditems', '');
+			$this->_item = false;
 
-			$id = $this->getState('ditem.id');
-
-			$this->_item = $cache->get($id);
-
-			if ($this->_item === false)
+			if (empty($id))
 			{
-				// redirect to ditem url
-				$db = $this->getDbo();
-				$query = $db->getQuery(true)
-					->select(
-						'a.clickurl as clickurl,' .
-							'a.cid as cid,' .
-							'a.track_clicks as track_clicks'
-					)
-					->from('#__ditems as a')
-					->where('a.id = ' . (int) $id)
+				$id = $this->getState('ditem.id');
+			}
 
-					->join('LEFT', '#__ditem_dnames AS cl ON cl.id = a.cid')
-					->select('cl.track_clicks as dname_track_clicks');
+			// Get a level row instance.
+			$table = JTable::getInstance('ditem', 'ditemsTable');
 
-				$db->setQuery($query);
-
-				try
+			// Attempt to load the row.
+			if ($table->load($id))
+			{
+				// Check published state.
+				if ($published = $this->getState('filter.published'))
 				{
-					$db->execute();
-				}
-				catch (RuntimeException $e)
-				{
-					JError::raiseError(500, $e->getMessage());
+					if ($table->state != $published)
+					{
+						return $this->_item;
+					}
 				}
 
-				$this->_item = $db->loadObject();
-				$cache->store($this->_item, $id);
+				// Convert the JTable to a clean JObject.
+				$properties = $table->getProperties(1);
+				$this->_item = JArrayHelper::toObject($properties, 'JObject');
+			}
+			elseif ($error = $table->getError())
+			{
+				$this->setError($error);
 			}
 		}
 
@@ -183,23 +95,34 @@ class DitemsModelDitem extends JModelLegacy
 	}
 
 	/**
-	 * Get the URL for a ditem
+	 * Returns a reference to the a Table object, always creating it.
 	 *
-	 * @return  string
-	 *
-	 * @since   1.5
+	 * @param	type	The table type to instantiate
+	 * @param	string	A prefix for the table class name. Optional.
+	 * @param	array	Configuration array for model. Optional.
+	 * @return	JTable	A database object
+	 * @since	1.6
 	 */
-	public function getUrl()
+	public function getTable($type = 'ditem', $prefix = 'ditemsTable', $config = array())
 	{
-		$item = $this->getItem();
-		$url = $item->clickurl;
+		return JTable::getInstance($type, $prefix, $config);
+	}
 
-		// check for links
-		if (!preg_match('#http[s]?://|index[2]?\.php#', $url))
+	/**
+	 * Method to increment the hit counter for the ditem
+	 *
+	 * @param   integer  $id  Optional ID of the ditem.
+	 *
+	 * @return  boolean  True on success
+	 */
+	public function hit($id = null)
+	{
+		if (empty($id))
 		{
-			$url = "http://$url";
+			$id = $this->getState('ditem.id');
 		}
 
-		return $url;
+		$ditem = $this->getTable('ditem', 'ditemsTable');
+		return $ditem->hit($id);
 	}
 }
